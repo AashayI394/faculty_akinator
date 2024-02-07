@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block topbar %}
+
+    <div class="top-bar">
+        <p string>HOME</p>
+        <p><a href="./login"> login </a></p>
+        <p><a href="./akinator"> akinator </a></p>
+        <p><a href="./facinator"> facinator </a></p>
+        <p><a href="./"> reset </a></p>
+    </div>
+
+
+    <div class="app">
+        <p class="app-choice">What's in your mind today ?</p>
+        <select required>
+            <input value="akinator" type="radio">Akinator</input>
+            <input value="facinator" type="radio">Facinator</input>
+        </select>
+
+        <button type="submit">let's play</button>
+    </div>
+
+
+    {% block facinatorbody %}
+
+
+
+    {% endblock %}
+
+
+
+
+{% endblock %}
