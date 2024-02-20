@@ -3,27 +3,61 @@
     <title>Facinator - login page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style media="screen">
-      .body{
-        background-color: red;
-      }
 
-    </style>
+    <link rel="stylesheet" href="../static/css/login.css">
+
   </head>
   <body>
-    <div class="container">
+
+  <!--
+    <div class="login-box">
       <h1>Please login</h1>
       <br>
-      <form action="" method="post">
+      <form action="" method="post"></form>
+        <div class="user-box">
         <input type="text" placeholder="Username" name="username" value="{{
           request.form.username }}">
+        </div>
+        <div class="user-box">
          <input type="password" placeholder="Password" name="password" value="{{
           request.form.password }}">
         <input class="btn btn-default" type="submit" value="Login">
+        <div class="user-box">
       </form>
       {% if error %}
         <p class="error"><strong>Error:</strong> {{ error }}
       {% endif %}
     </div>
+
+
+    -->
+
+
+
+
+    <div class="login-box">
+      <p>Login</p>
+      <form action="" method="post">
+        <div class="user-box">
+          <input type="text" name="username" value="{{
+            request.form.username }}">
+          <label>username</label>
+        </div>
+        <div class="user-box">
+          <input type="password" name="password" value="{{
+            request.form.password }}">
+          <label>Password</label>
+        </div>
+        <input class="a" type="submit" value="Login">
+        {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}
+        {% endif %}
+      </form>
+      <p>Don't have an account? <a href="" class="a2">Sign up!</a></p>
+    </div>
+
+
+
+
   </body>
 </html>

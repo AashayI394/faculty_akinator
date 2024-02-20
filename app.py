@@ -14,7 +14,8 @@ def login():
     error = None
     if request.method == 'POST':
         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid Credentials. Please try again.'
+            #error = 'Invalid Credentials. Please try again.'
+            return render_template("error.html")
         else:
             return render_template("addquestion.html")
     return render_template("login.html", error=error)
