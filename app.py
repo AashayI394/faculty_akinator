@@ -40,3 +40,8 @@ def submit():
 @app.route("/addnew")
 def addnew():
     return render_template("addquestion.html")
+
+
+@app.route("/register")
+def register():
+    return render_template("register.html")
