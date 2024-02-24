@@ -75,26 +75,53 @@ cursor = conn.cursor()
 #     print(str(i[0])+" | "+i[1])
 
 # Execute a query to fetch subjects along with their department and year of study
-cursor.execute('''SELECT s.id, s.name AS subject_name, d.name AS department_name, y.year AS year_of_study, s.semester
-                  FROM subjects s
-                  JOIN departments d ON s.department_id = d.id
-                  JOIN year_of_study y ON s.year_of_study_id = y.id''')
+# cursor.execute('''SELECT s.id, s.name AS subject_name, d.name AS department_name, y.year AS year_of_study, s.semester
+#                   FROM subjects s
+#                   JOIN departments d ON s.department_id = d.id
+#                   JOIN year_of_study y ON s.year_of_study_id = y.id''')
 
-# # Fetch all rows from the result set
-# cursor.execute("SELECT * FROM subject")
+# # # Fetch all rows from the result set
+# # cursor.execute("SELECT * FROM subject")
+# results = cursor.fetchall()
+
+# print("Number of rows fetched:", len(results))
+# print()
+# # Print the results
+# for row in results:
+#     print("Subject:", row[1])
+#     print("Department:", row[2])
+#     print("Year of Study:", row[3])
+#     print("Semester: ",row[4] )  
+#     print() #newline for better formatting
+
+
+# Execute a query to fetch faculties along with their department and subject details
+cursor.execute('''SELECT f.id, f.name AS faculty_name, d.name AS department_name, s.name AS subject_name, f.email
+                  FROM faculties f
+                  JOIN departments d ON f.department_id = d.id
+                  JOIN subjects s ON f.subject_id = s.id''')
+
+# Fetch all rows from the result set
 results = cursor.fetchall()
-
-print("Number of rows fetched:", len(results))
+print("Fetching results from faculties table..")
 print()
 # Print the results
 for row in results:
-    print("Subject:", row[1])
-    print("Department:", row[2])
-    print("Year of Study:", row[3])
-    print("Semester: ",row[4] )  
-    print() #newline for better formatting
+    print("Faculty ID:", row[0])
+    print("Faculty Name:", row[1])
+    print("Department Name:", row[2])
+    print("Subject Name:", row[3])
+    print("Email ID:", row[4])
+    print()
 
 
+# cursor.executemany("INSERT INTO faculties (name,email,department_id,subject_id) VALUES (?,?,?,?)",many_faculties)
+# conn.commit()
+# print("Faculties added successfully...")
+# cursor.execute("""UPDATE subjects SET department_id=1  
+#                     WHERE id=16""")
+# conn.commit()
+# print("Department updated..")
 
 #INSERT DEPARTMENT AND YEAR_OF_STUDY
 # many_dept = [

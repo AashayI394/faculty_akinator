@@ -53,13 +53,44 @@ SUBJECTS (TABLE 3)
 #                 ]
  
 FACULTY (TABLE 4)
-#
-faculties_data = [
-    ('John Doe', 'john@example.com', 1),
-    ('Jane Smith', 'jane@example.com', 2),
-    ('Michael Johnson', 'michael@example.com', 3)
-]
+## many_faculties = [
+#                     ('Ms. Suranje K. S.','knj.appsci@coeptech.ac.in',4,3,),
+#                     ('Dr. Tripathi K. K.','kkt.civil@coeptech.ac.in',9,9,),
+#                     ('Gadade H. D.','hdg.comp@coeptech.ac.in',1,5,),
+#                     ('Dr. Kshirsagar D. D.','ddk.comp@coeptech.ac.in',1,21,),
+#                     ('Dr. Revankar P. S.','psr.comp@coeptech.ac.in',1,12,),
+#                     ('Dr. Revankar P. S.','psr.comp@coeptech.ac.in',1,22,),
+#                     ('Ms. Ugale T. V.','tjj.comp@coeptech.ac.in',1,18,),
+#                     ('Ms. Ugale T. V.','tjj.comp@coeptech.ac.in',1,26,),
+#                     ('Ms. Kalamkar S. P.','spk.comp@coeptech.ac.in',1,13,),
+#                     ('Ms. Deshmukh P. R.','dpr.comp@coeptech.ac.in',1,24,),
+#                     ('Ms. Watve Bhagyashri','bsw.appsci@coeptech.ac.in',4,25,),
+#                     ('Ms. Moghe K. V.','kam.appsci@coeptech.ac.in',4,19,),
+#                     ('Ms. Deshpande N. I.','nid.comp@coeptech.ac.in',1,14,),
+#                     ('Ms. Unde S. V.','svu.elec@coeptech.ac.in',7,8,),
+#                     ('Ms. Kulkarni A. A.','aak.extc@coeptech.ac.in',3,6,),
+#                     ('Dr. Shendge P. D.','pds.instru@coeptech.ac.in',8,15,),
+#                     ('Dr. Kokate R. D.','aak.extc@coeptech.ac.in',8,23,),
+#                     ('Ms. Kulkarni R. S.','rmp.maths@coeptech.ac.in',6,7,),
+#                     ('Ms. Dhere A. B.','abd.maths@coeptech.ac.in',6,1,),
+#                     ('Ms. Shinde N. V.','nvs.maths@coeptech.ac.in',6,17,),
+#                     ('Dr. Shinde P. M.','pms.maths@coeptech.ac.in',6,20,),
+#                     ('Dhote N. D.','ndd.mech@coeptech.ac.in',2,10,),
+#                     ('Ms. Patil N. A.','pna.physics@coeptech.ac.in',5,2,),
+#                     ('Dr. Dadge J. W.','jwd.physics@coeptech.ac.in',5,11,),
+#                     ('Ms. Mundra S. S.','aak.extc@coeptech.ac.in',2,4,),
+#                     ('Ms. Pandit Ira','panditi.comp@coeptech.ac.in',1,16,),
+# ]
 
+# cursor.execute('''CREATE TABLE IF NOT EXISTS faculties (
+#                     id INTEGER PRIMARY KEY,
+#                     name TEXT NOT NULL,
+#                     email TEXT,
+#                     department_id INTEGER,
+#                     subject_id INTEGER,
+#                     FOREIGN KEY (department_id) REFERENCES departments(id),
+#                     FOREIGN KEY (subject_id) REFERENCES subjects(id)
+#                 )''')
 
 
 
