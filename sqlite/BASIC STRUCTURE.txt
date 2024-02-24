@@ -1,0 +1,45 @@
+DEPARTMENT TABLE (TABLE 1)
+Computer Engineering
+Mechanical Engineering
+ENTC Engineering
+
+YEAR (TABLE 2)
+FY
+SY
+TY
+BTech
+year_of_study_data = [
+    ('First Year',),
+    ('Second Year',),
+    ('Third Year',),
+    ('Fourth Year',)
+]
+
+
+SEMESTER 
+ODD
+EVEN
+
+
+
+SUBJECTS (TABLE 3)
+#
+subjects_data = [
+    ('Introduction to Programming', 1, 1, 1),
+    ('Algorithms', 1, 1, 2),
+    ('Circuit Theory', 2, 2, 3),
+    ('Control Systems', 2, 2, 4),
+    ('Thermodynamics', 3, 3, 5)
+]
+ 
+FACULTY (TABLE 4)
+#
+faculties_data = [
+    ('John Doe', 'john@example.com', 1),
+    ('Jane Smith', 'jane@example.com', 2),
+    ('Michael Johnson', 'michael@example.com', 3)
+]
+
+
+
+
