@@ -1,0 +1,41 @@
+{% extends "loginlayout.html" %}
+
+
+{% block form %}
+
+<div class="login-box">
+    <p class="login-title">Sign-Up !</p>
+    <form action="" method="post" class="form">
+      <div class="user-box">
+        <input type="text" name="username" value="{{
+          request.form.username }}" placeholder="username" class="user-field">
+      </div>
+      <div class="user-box">
+        <input type="text" name="mis" value="{{
+          request.form.mis }}" placeholder="MIS" class="user-field">
+      </div>
+      <div class="user-box">
+        <input type="text" name="email" value="{{
+          request.form.email }}" placeholder="COEP mail" class="user-field">
+      </div>
+
+      <div class="user-box">
+        <input type="password" name="password" value="{{
+          request.form.password }}" placeholder="Password" class="user-field">
+      </div>
+      <div class="user-box">
+          <input type="password" name="password" value="{{
+            request.form.password }}" placeholder="Confirm Password" class="user-field">
+        </div>
+      <input class="btn" type="submit" value="Sign Up">
+      
+      {% if error %}
+      <p class="error"><strong>Error:</strong> {{ error }}
+      {% endif %}
+      
+    </form>
+    <p>Already have an account? <a href="/login" class="a2">Login</a></p>
+  </div>
+
+{% endblock form %}
+

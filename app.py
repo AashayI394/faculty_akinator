@@ -41,6 +41,11 @@ def submit():
 def addnew():
     return render_template("addquestion.html")
 
+@app.route("/home")
+def home():
+    return render_template("home.html")
+
+
 
 @app.route("/register")
 def register():
