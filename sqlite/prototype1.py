@@ -35,59 +35,62 @@ cursor = conn.cursor()
 #                     FOREIGN KEY (subject_id) REFERENCES subjects(id)
 #                 )''')
 
+# cursor.execute("SELECT * FROM faculties")
+
+# items = cursor.fetchall()
+# for i in items:
+#     print(i)
+
 #inserting subjects in subjects table
+
 # many_subjects = [
-#                     (1,'Linear Algebra',6,1,1),
-#                     (2,'Optics and Modern Physics',5,1,1),
-#                     (3,'Applied Chemistry',4,1,1),
-#                     (4,'Foundations of Mechanical Engineering',2,1,1),
-#                     (5,'Problem Solving using Python',1,1,1),
-#                     (6,'Electronics and Computer Workshop',3,1,1),
-#                     (7,'Univariate Calculus',6,1,2),
-#                     (8,'Basic Electrical Engineering',7,1,2),
-#                     (9,'Engineering Mechanics',9,1,2),
-#                     (10,'Engineering Graphics and Design',2,1,2),
-#                     (11,'Semiconductor Physics and Electromagnetism',5,1,2),
-#                     (12,'Digital Logic and Design',1,2,3),
-#                     (13,'Data Structures and Algorithms-I',1,2,3),
-#                     (14,'Principles of Programming Languages',1,2,3),
-#                     (15,'Feedback Control Systems',8,2,3),
-#                     (16,'Discrete Structures and Graph Theory',6,2,3),
-#                     (17,'Ordinary Differential Equations',6,2,3),
-#                     (18,'Development Tools Laboratory',1,2,3),
-#                     (19,'PLEVH',4,2,3),
-#                     (20,'Vector Calculus',6,2,4),
-#                     (21,'Data Communication',1,2,4),
-#                     (22,'Microprocessor Techniques',1,2,4),
-#                     (23,'Sensors and Automation',8,2,4),
-#                     (24,'Data Structures and Algorithms-II',1,2,4),
-#                     (25,'Biology For Engineers',4,2,4),
-#                     (26,'RPPOOP',1,2,4),
-#                 ]
+#                     ('Electronic Devices and Circuits',3,2,3),
+#                     ('Digital System Design',3,2,3),            
+#                     ('Signals and Systems',3,2,3),
+#                     ('Network Synthesis and Analog Filters',3,2,3),
+#                     ('Microcontrollers and Applications',3,2,4),
+#                     ('Integrated Circuits and Applications',3,2,4),
+#                     ('Micro-Project',3,2,4),
+#                    ]
 
-# cursor.executemany("INSERT INTO subjects VALUES (?,?,?,?,?)",many_subjects)
+# cursor.executemany("INSERT INTO subjects (name,department_id,year_of_study_id,semester) VALUES (?,?,?,?)",many_subjects)
+# print("ENTC Subjects Added Successfully...")
+# conn.commit()
 
+# #inserting faculties in faculties table
+# many_faculties = [
+#                     ('Dr. Mahajan S. P.','spm.extc@coeptech.ac.in',3,35),
+#                     ('Ms. Agarwal V. S.','vsa.extc@coeptech.ac.in',3,36),
+#                     ('Ms. Metkar S. P.','metkars.extc@coeptech.ac.in',3,37),
+#                     ('Ms. Kapse Y. D.','ydk.extc@coeptech.ac.in',3,38),
+#                     ('Ms. Kolhare N. R.','nrk.extc@coeptech.ac.in',3,39),
+#                     ('Ms. More V. N.','vnm.extc@coeptech.ac.in',3,40),
+#                     ('Ms. Niture D. V.','dvn.extc@coeptech.ac.in',3,41),
+#                     ]
+
+# cursor.executemany("INSERT INTO faculties (name,email,department_id,subject_id) VALUES (?,?,?,?)",many_faculties)
+# print("Faculties added...")
+# conn.commit()
 
 # cursor.execute("SELECT * FROM subjects") 
 # items = cursor.fetchall()
 
 # for i in items:
-#     print(str(i[0])+" | "+i[1])
+#     print(i)
 
-# Execute a query to fetch subjects along with their department and year of study
+# #Execute a query to fetch subjects along with their department and year of study
 # cursor.execute('''SELECT s.id, s.name AS subject_name, d.name AS department_name, y.year AS year_of_study, s.semester
 #                   FROM subjects s
 #                   JOIN departments d ON s.department_id = d.id
-#                   JOIN year_of_study y ON s.year_of_study_id = y.id''')
+#                   JOIN year_of_study y ON s.year_of_study_id = y.id
+#                   WHERE department_name LIKE "ENTC%"''')
 
-# # # Fetch all rows from the result set
-# # cursor.execute("SELECT * FROM subject")
 # results = cursor.fetchall()
-
 # print("Number of rows fetched:", len(results))
 # print()
-# # Print the results
+# # # Print the results
 # for row in results:
+#     print("Subject ID: ", row[0])
 #     print("Subject:", row[1])
 #     print("Department:", row[2])
 #     print("Year of Study:", row[3])
@@ -95,52 +98,32 @@ cursor = conn.cursor()
 #     print() #newline for better formatting
 
 
-# Execute a query to fetch faculties along with their department and subject details
-cursor.execute('''SELECT f.id, f.name AS faculty_name, d.name AS department_name, s.name AS subject_name, f.email
-                  FROM faculties f
-                  JOIN departments d ON f.department_id = d.id
-                  JOIN subjects s ON f.subject_id = s.id''')
+# #Execute a query to fetch faculties along with their department and subject details
+# cursor.execute('''SELECT f.id, f.name AS faculty_name, d.name AS department_name, s.name AS subject_name, f.email
+#                   FROM faculties f
+#                   JOIN departments d ON f.department_id = d.id
+#                   JOIN subjects s ON f.subject_id = s.id
+#                   WHERE d.name LIKE "ENTC%"''')
 
-# Fetch all rows from the result set
-results = cursor.fetchall()
-print("Fetching results from faculties table..")
-print()
-# Print the results
-for row in results:
-    print("Faculty ID:", row[0])
-    print("Faculty Name:", row[1])
-    print("Department Name:", row[2])
-    print("Subject Name:", row[3])
-    print("Email ID:", row[4])
-    print()
-
+# # Fetch all rows from the result set
+# results = cursor.fetchall()
+# print("Fetching results from faculties table..")
+# print()
+# # Print the results
+# for row in results:
+#     print("Faculty ID:", row[0])
+#     print("Faculty Name:", row[1])
+#     print("Department Name:", row[2])
+#     print("Subject Name:", row[3])
+#     print("Email ID:", row[4])
+#     print()
 
 # cursor.executemany("INSERT INTO faculties (name,email,department_id,subject_id) VALUES (?,?,?,?)",many_faculties)
-# conn.commit()
 # print("Faculties added successfully...")
 # cursor.execute("""UPDATE subjects SET department_id=1  
 #                     WHERE id=16""")
 # conn.commit()
 # print("Department updated..")
-
-#INSERT DEPARTMENT AND YEAR_OF_STUDY
-# many_dept = [
-#                 ('Computer Engineering',),
-#                 ('Mechanical Engineering',),
-#                 ('ENTC Engineering',),
-#                 ('Applied Science',),
-#                 ('Physics',),
-#                 ('Mathematics',),
-#                 ('Electrical Engineering',),
-#                 ('Instrumentation Engineering',),
-#                 ('Civil Engineering',),
-#             ]
-# many_years = [
-#                 ('First Year',),
-#                 ('Second Year',),
-#                 ('Third Year',),
-#                 ('Fourth Year',),
-#              ]
 
 # Commit changes and close the connection
 # conn.commit()
