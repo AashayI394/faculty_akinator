@@ -50,36 +50,59 @@ SUBJECTS (TABLE 3)
 #                     (24,'Data Structures and Algorithms-II',1,2,4),
 #                     (25,'Biology For Engineers',4,2,4),
 #                     (26,'RPPOOP',1,2,4),
+		      (27, 'Theory of Computation', 1, 2, 4)
+		      (28, 'Electrical and Electronics Measurement', 8, 2, 3)
+		      (29, 'Transducers', 8, 2, 3)
+		      (30, 'Analog Electronics', 8, 2, 3)
+		      (31, 'Computational Methods', 8, 2, 3)
+		      (32, 'Automatic Control Systems', 8, 2, 4)
+		      (33, 'Signals and Systems', 8, 2, 4)
+		      (34, 'Digital Electronics', 8, 2, 4)
+		      (35, 'Electronic Devices and Circuits', 3, 2, 3)
+			(36, 'Digital System Design', 3, 2, 3)
+			(37, 'Signals and Systems', 3, 2, 3)
+			(38, 'Network Synthesis and Analog Filters', 3, 2, 3)
+			(39, 'Microcontrollers and Applications', 3, 2, 4)
+			(40, 'Integrated Circuits and Applications', 3, 2, 4)
+			(41, 'Micro-Project', 3, 2, 4)
 #                 ]
  
 FACULTY (TABLE 4)
 ## many_faculties = [
-#                     ('Ms. Suranje K. S.','knj.appsci@coeptech.ac.in',4,3,),
-#                     ('Dr. Tripathi K. K.','kkt.civil@coeptech.ac.in',9,9,),
-#                     ('Gadade H. D.','hdg.comp@coeptech.ac.in',1,5,),
-#                     ('Dr. Kshirsagar D. D.','ddk.comp@coeptech.ac.in',1,21,),
-#                     ('Dr. Revankar P. S.','psr.comp@coeptech.ac.in',1,12,),
-#                     ('Dr. Revankar P. S.','psr.comp@coeptech.ac.in',1,22,),
-#                     ('Ms. Ugale T. V.','tjj.comp@coeptech.ac.in',1,18,),
-#                     ('Ms. Ugale T. V.','tjj.comp@coeptech.ac.in',1,26,),
-#                     ('Ms. Kalamkar S. P.','spk.comp@coeptech.ac.in',1,13,),
-#                     ('Ms. Deshmukh P. R.','dpr.comp@coeptech.ac.in',1,24,),
-#                     ('Ms. Watve Bhagyashri','bsw.appsci@coeptech.ac.in',4,25,),
-#                     ('Ms. Moghe K. V.','kam.appsci@coeptech.ac.in',4,19,),
-#                     ('Ms. Deshpande N. I.','nid.comp@coeptech.ac.in',1,14,),
-#                     ('Ms. Unde S. V.','svu.elec@coeptech.ac.in',7,8,),
-#                     ('Ms. Kulkarni A. A.','aak.extc@coeptech.ac.in',3,6,),
-#                     ('Dr. Shendge P. D.','pds.instru@coeptech.ac.in',8,15,),
-#                     ('Dr. Kokate R. D.','aak.extc@coeptech.ac.in',8,23,),
-#                     ('Ms. Kulkarni R. S.','rmp.maths@coeptech.ac.in',6,7,),
-#                     ('Ms. Dhere A. B.','abd.maths@coeptech.ac.in',6,1,),
-#                     ('Ms. Shinde N. V.','nvs.maths@coeptech.ac.in',6,17,),
-#                     ('Dr. Shinde P. M.','pms.maths@coeptech.ac.in',6,20,),
-#                     ('Dhote N. D.','ndd.mech@coeptech.ac.in',2,10,),
-#                     ('Ms. Patil N. A.','pna.physics@coeptech.ac.in',5,2,),
-#                     ('Dr. Dadge J. W.','jwd.physics@coeptech.ac.in',5,11,),
-#                     ('Ms. Mundra S. S.','aak.extc@coeptech.ac.in',2,4,),
-#                     ('Ms. Pandit Ira','panditi.comp@coeptech.ac.in',1,16,),
+#                     (1, 'Ms. Suranje K. S.', 'knj.appsci@coeptech.ac.in', 4, 3)
+(2, 'Dr. Tripathi K. K.', 'kkt.civil@coeptech.ac.in', 9, 9)
+(3, 'Gadade H. D.', 'hdg.comp@coeptech.ac.in', 1, 5)
+(4, 'Dr. Kshirsagar D. D.', 'ddk.comp@coeptech.ac.in', 1, 21)
+(5, 'Dr. Revankar P. S.', 'psr.comp@coeptech.ac.in', 1, 12)
+(6, 'Dr. Revankar P. S.', 'psr.comp@coeptech.ac.in', 1, 22)
+(7, 'Ms. Ugale T. V.', 'tjj.comp@coeptech.ac.in', 1, 18)
+(8, 'Ms. Ugale T. V.', 'tjj.comp@coeptech.ac.in', 1, 26)
+(9, 'Ms. Kalamkar S. P.', 'spk.comp@coeptech.ac.in', 1, 13)
+(10, 'Ms. Deshmukh P. R.', 'dpr.comp@coeptech.ac.in', 1, 24)
+(11, 'Ms. Watve Bhagyashri', 'bsw.appsci@coeptech.ac.in', 4, 25)
+(12, 'Ms. Moghe K. V.', 'kam.appsci@coeptech.ac.in', 4, 19)
+(13, 'Ms. Deshpande N. I.', 'nid.comp@coeptech.ac.in', 1, 14)
+(14, 'Ms. Unde S. V.', 'svu.elec@coeptech.ac.in', 7, 8)
+(15, 'Ms. Kulkarni A. A.', 'aak.extc@coeptech.ac.in', 3, 6)
+(16, 'Dr. Shendge P. D.', 'pds.instru@coeptech.ac.in', 8, 15)
+(17, 'Dr. Kokate R. D.', 'aak.extc@coeptech.ac.in', 8, 23)
+(18, 'Ms. Kulkarni R. S.', 'rmp.maths@coeptech.ac.in', 6, 7)
+(19, 'Ms. Dhere A. B.', 'abd.maths@coeptech.ac.in', 6, 1)
+(20, 'Ms. Shinde N. V.', 'nvs.maths@coeptech.ac.in', 6, 17)
+(21, 'Dr. Shinde P. M.', 'pms.maths@coeptech.ac.in', 6, 20)
+(22, 'Dhote N. D.', 'ndd.mech@coeptech.ac.in', 2, 10)
+(23, 'Ms. Patil N. A.', 'pna.physics@coeptech.ac.in', 5, 2)
+(24, 'Dr. Dadge J. W.', 'jwd.physics@coeptech.ac.in', 5, 11)
+(25, 'Ms. Mundra S. S.', 'aak.extc@coeptech.ac.in', 2, 4)
+(26, 'Ms. Pandit Ira', 'panditi.comp@coeptech.ac.in', 1, 16)
+(27, 'Ms. Jibi Abraham', 'ja.comp@coeptech.ac.in', 1, 27)
+(28, 'Dr. Shendge P. D.', 'pds.instru@coeptech.ac.in', 8, 32)
+(29, 'Ms. Bhole K. A.', 'kab.instru@coeptech.ac.in', 8, 28)
+(30, 'Dr. Agashe S. D.', 'sda.instru@coeptech.ac.in', 8, 29)
+(31, 'Dr. Patil S. L.', 'slp.instru@coeptech.ac.in', 8, 30)
+(32, 'Dr. Chaskar U. M.', 'umc.instru@coeptech.ac.in', 8, 31)
+(33, 'Dr. Patil C. Y.', 'cyp.instru@coeptech.ac.in', 8, 33)
+(34, 'Dr. Chaskar U. M.', 'umc.instru@coeptech.ac.in', 8, 34)
 # ]
 
 # cursor.execute('''CREATE TABLE IF NOT EXISTS faculties (
