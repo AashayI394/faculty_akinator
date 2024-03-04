@@ -243,12 +243,12 @@
             </div>
             <div class="content">
 
-              {% for i in range(100) %}
+              {% for i in items %}
               <div class="card">
                 <div class="card-info">
                     <div class="card-avatar"></div>
-                    <div class="card-title">name</div>
-                    <div class="card-subtitle">department</div>
+                    <div class="card-title">{{ i[1] }}</div>
+                    <div class="card-subtitle">{{ i[2] }}</div>
                 </div>
                   <a href="/login" class="card-social__item card-social">
                     <button type="button" class="btn btn-primary mail ">Mail</button>
