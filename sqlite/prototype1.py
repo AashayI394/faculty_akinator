@@ -83,7 +83,7 @@ cursor.execute('''SELECT s.id, s.name AS subject_name, d.name AS department_name
                   FROM subjects s
                   JOIN departments d ON s.department_id = d.id
                   JOIN year_of_study y ON s.year_of_study_id = y.id
-                  WHERE department_name LIKE "Instru%"''')
+                  WHERE department_name LIKE "Electr%"''')
 
 results = cursor.fetchall()
 print("Number of rows fetched:", len(results))
