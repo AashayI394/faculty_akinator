@@ -71,10 +71,6 @@ def get_faculties(department, subject):
     # Get department ID
     cursor.execute("SELECT id FROM departments WHERE name = ?", (department,))
     department_id_row = cursor.fetchone()
-    if department_id_row is None:
-        conn.close()
-        return []
-
     department_id = department_id_row[0]
     print("Department ID:", department_id)
 
@@ -82,9 +78,9 @@ def get_faculties(department, subject):
     cursor.execute("SELECT id FROM subjects WHERE name = ?", (subject,))
     subject_id_row = cursor.fetchone()
     if subject_id_row is None:
+        print("Subject not found")
         conn.close()
-        return []
-
+        return None
     subject_id = subject_id_row[0]
     print("Subject ID:", subject_id)
 
