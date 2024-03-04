@@ -50,3 +50,12 @@ def home():
 @app.route("/register")
 def register():
     return render_template("register.html")
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('error.html'), 404
+
+@app.route("/temp")
+def temp():
+    return render_template("layout2.html")
+
