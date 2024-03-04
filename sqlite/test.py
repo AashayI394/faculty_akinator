@@ -18,6 +18,7 @@ print()
 subjects = get_subjects(department,year,semesters)
 print("Subjects: ",subjects)
 
-subject = "Digital Logic Design"
+subject = "Linear Algebra"
+department="Mathematics"
 faculties = get_faculties(department,subject)
 print("Faculties: ",faculties)

@@ -86,7 +86,7 @@ def get_faculties(department, subject):
 
     # Fetch faculties for the given department and subject
     cursor.execute("SELECT name FROM faculties WHERE department_id = ? AND subject_id = ?", (department_id, subject_id))
-    faculties = cursor.fetchone()
+    faculties = cursor.fetchall()
 
     conn.close()
     return faculties
