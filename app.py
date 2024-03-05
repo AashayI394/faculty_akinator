@@ -4,31 +4,18 @@ app = Flask(__name__)
 
 from app import app
 import sqlite3
-con = sqlite3.connect("college_faculty.db")
+con = sqlite3.connect("facinator.db")
 c = con.cursor()
 
  #Execute a query to fetch faculties along with their department and subject details
-c.execute('''SELECT f.id, f.name AS faculty_name, d.name AS department_name, s.name AS subject_name, f.email
-                  FROM faculties f
-                  JOIN departments d ON f.department_id = d.id
-                  JOIN subjects s ON f.subject_id = s.id
-                  ''')
-
-item = c.fetchall()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+c.execute('''SELECT * FROM Facinator_MasterDB_Sheet1''')
+table = c.fetchall()
+c.execute('''SELECT DISTINCT department_name FROM Facinator_MasterDB_Sheet1''')
+department = c.fetchall()
+c.execute('''SELECT DISTINCT subject_name FROM Facinator_MasterDB_Sheet1''')
+subject = c.fetchall()
+c.execute('''SELECT DISTINCT year_of_study FROM Facinator_MasterDB_Sheet1''')
+year = c.fetchall()
 
 
 @app.route("/")
@@ -82,7 +69,7 @@ def register():
 def page_not_found(e):
     return render_template('error.html'), 404
 
-@app.route("/temp")
+@app.route("/main")
 def temp():
-    return render_template("layout2.html", items=item)
+    return render_template("layout2.html", items=table, department=department, subject=subject, year=year)
 
