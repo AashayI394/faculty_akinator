@@ -17,6 +17,20 @@ def get_department_and_year():
 	conn.close()
 	return departments, years
 
+def get_fac_from_dept(department):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id FROM departments WHERE name = ?", (department,))
+    department_id_row = cursor.fetchone()
+    department_id = department_id_row[0]
+    print("Department ID:", department_id)
+    # Fetch faculties for the given department and subject
+    cursor.execute("SELECT name,email FROM faculties WHERE department_id = ?", (department_id,))
+    faculties = cursor.fetchall()
+
+    conn.close()
+    return faculties
+
 
 #function to get semesters
 def get_semester(department, year):
