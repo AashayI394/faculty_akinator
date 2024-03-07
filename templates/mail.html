@@ -1,0 +1,53 @@
+{% extends "layout2.html" %}
+
+
+{% block content %}
+
+    <div class="mailbox">
+        <div class="card">
+            <div class="card-info">
+                <div class="card-avatar"></div>
+                <div class="card-title">{{ i[1] }}</div>
+                <div class="card-subtitle">{{ i[3] }}</div>
+            </div>
+            <ul class="card-social">
+                <li class="card-social__item">
+                </li>
+            </ul>
+        </div>
+
+        <div class="mailto">
+            <form action="{{ url_for('mailto') }}" method="POST" class="mailto">
+                <input name="email" id="email" type="text" placeholder="{{ i[2] }}" class="form-control" value="{{ i[2] }}" hidden>
+                <input type="text" placeholder="{{ i[2] }}" class="form-control" value="{{ i[2] }}" disabled>
+                <input id="mailsubject" name="mailsubject" type="text" placeholder="Subject" class="form-control">
+                <textarea id="mailbody" name="mailbody" id="body" cols="30" rows="10" placeholder="Description" class="form-control"></textarea>
+
+                <input type="submit" class="btn btn-primary mailbtn" value="Mail">
+            </form>
+            <!-- <a href="mailto:#">
+                <button class="btn btn-primary mailbtn">Mail</button>
+            </a> -->
+
+
+        </div>
+    </div>
+
+
+    <div>
+        <table class="tags">
+            <tr>
+                <th>Course Name</th><th>Year</th><th>Semester</th>
+            </tr>
+            {% for q in lectures %}
+            <tr>
+                <td>{{ q[6] }}</td><td>{{ q[7] }}</td><td>{{ q[8] }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+
+    </div>
+
+
+
+{% endblock %}
