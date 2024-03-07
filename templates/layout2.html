@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
+
+
     <style>
         .container{
             display: flex;
@@ -39,9 +41,9 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             background-color: aliceblue;
+            padding: 20px;
 
         }
 
@@ -69,6 +71,9 @@
         .clear{
             width: 90%;
             margin-top: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .topbar{
@@ -87,6 +92,8 @@
             justify-content: center;
             align-items: center;
             overflow-y: scroll;
+            margin-bottom: 10px;
+            min-width: 90%;
         }
 
 
@@ -118,8 +125,9 @@
         --size: 60px;
         background: linear-gradient(to top, #f1e1c1 0%, #fcbc97 100%);
         width: var(--size);
+        width: 95%;
         height: var(--size);
-        border-radius: 50%;
+        border-radius: 5px;
         transition: transform .2s ease;
         margin-bottom: 1rem;
         }
@@ -199,8 +207,155 @@
 
         .mail{
           width: 100%;
-          align-self: flex-end;
+          align-self: flex-end;          
         }
+
+        .topbar{
+          margin: 25px;
+
+        }
+
+        .group {
+        position: relative;
+        }
+
+        .input {
+        position: relative;
+        font-size: 16px;
+        padding: 10px 10px 10px 5px;
+        display: block;
+        width: 400px;
+        border: none;
+        border-bottom: 1px solid #515151;
+        background: transparent;
+        }
+
+        .input:focus {
+        outline: none;
+        }
+
+        label {
+        color: #999;
+        font-size: 18px;
+        font-weight: normal;
+        position: absolute;
+        pointer-events: none;
+        left: 5px;
+        top: 10px;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+        }
+
+        .input:focus ~ label, .input:valid ~ label {
+        top: -20px;
+        font-size: 14px;
+        color: #5264AE;
+        }
+
+        .bar {
+        position: relative;
+        display: block;
+        width: 400px;
+        }
+
+        .bar:before, .bar:after {
+        content: '';
+        height: 2px;
+        width: 0;
+        bottom: 1px;
+        position: absolute;
+        background: #5264AE;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+        }
+
+        .bar:before {
+        left: 50%;
+        }
+
+        .bar:after {
+        right: 50%;
+        }
+
+        .input:focus ~ .bar:before, .input:focus ~ .bar:after {
+        width: 50%;
+        }
+
+        .highlight {
+        position: absolute;
+        height: 60%;
+        width: 100px;
+        top: 25%;
+        left: 0;
+        pointer-events: none;
+        opacity: 0.5;
+        }
+
+        .input:focus ~ .highlight {
+        animation: inputHighlighter 0.3s ease;
+        }
+
+        @keyframes inputHighlighter {
+          from {
+            background: #5264AE;
+          }
+
+          to {
+            width: 0;
+            background: transparent;
+          }
+        }
+
+        .mailbox{
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+          padding: 50px;
+          margin: 10px;
+          margin-top: 50px;
+          width: 100%;
+          height: 500px;
+          justify-content: center;
+          align-items: center;
+          background-color: #f3f3f3;
+          border-radius: 20px;
+
+        }
+
+        .details{
+          flex: 1;
+          margin-left: 20px;
+          max-width: 250px;
+        }
+
+        .mailto{
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          gap: 10px;
+          margin-left: 30px;
+        }
+
+        .mailbtn{
+          width: 100px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+
+        .tags{
+          width: 500px;
+          margin-top: 30px;
+        }
+
+        
+
+
+
+
 
 
     </style>
@@ -214,8 +369,14 @@
                   Department
                 </button>
                 <ul class="dropdown-menu">
-                  {% for i in items %}
-                  <li><a class="dropdown-item" href="#">{{ i[3] }}</a></li>
+
+                  {% for i in department %}
+                  <li>
+                    <form action="{{ url_for('dept') }}" name="dept" id="dept" method="POST">
+                    <input type="submit" value="{{ i[0] }}" name="dept" class="dropdown-item">
+                    </form>
+                  </li>
+                  <!-- <li><a class="dropdown-item" href="#">{{ i[3] }}</a></li> -->
                   {% endfor %}
                 </ul>
             </div>
@@ -227,7 +388,11 @@
                 <ul class="dropdown-menu">
 
                   {% for y in year %}
-                  <li><a class="dropdown-item" href="#">{{ y[0] }}</a></li>
+                  <li>
+                    <form action="{{ url_for('yos') }}" name="year" id="year" method="POST">
+                    <input type="submit" value="{{ y[0] }}" name="year" class="dropdown-item">
+                    </form>
+                  </li>
                   {% endfor %}
                   <!-- <li><a class="dropdown-item" href="#">Third Year</a></li>
                   <li><a class="dropdown-item" href="#">BTech Year</a></li> -->
@@ -242,7 +407,11 @@
                 <ul class="dropdown-menu">
 
                   {% for s in subject %}
-                  <li><a class="dropdown-item" href="#">{{ s[0] }}</a></li>
+                    <li>
+                      <form action="{{ url_for('subj') }}" name="subject" id="subject" method="POST">
+                      <input type="submit" value="{{ s[0] }}" name="subject" class="dropdown-item">
+                      </form>
+                    </li>
                   {% endfor %}
                   <!-- 
                   <li><a class="dropdown-item" href="#">Sensors and Automation</a></li>
@@ -257,39 +426,38 @@
               </div>
 
 
-
+              <a href="/clear" class="clear">
               <button type="button" class="btn btn-secondary clear">Clear</button>
+              </a>
+              
               
 
         </div>
+
+
         <div class="middle">
-            <div class="topbar">
 
+
+          <div class="topbar">
+            <div class="group">
+                <input required="" type="text" class="input">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Facinator</label>
             </div>
-            <div class="content">
-
-              {% for i in items %}
-              <div class="card">
-                <div class="card-info">
-                    <div class="card-avatar"></div>
-                    <div class="card-title">{{ i[1] }}</div>
-                    <div class="card-subtitle">{{ i[3] }}</div>
-                    <a href="/login" class="card-social__item card-social">
-                      <button type="button" class="btn btn-primary mail ">Mail</button>
-                    </a>
-                </div> 
-              </div>
-
-              {% endfor %}
+        </div>
 
 
+        <div class="content">
 
-
-
-
-            </div>
+          {% block content %}
+          {% endblock %}
 
         </div>
+
+        </div>
+
+
         <div class="profile">
 
 
@@ -298,3 +466,5 @@
     </div>
 </body>
 </html>
+
+

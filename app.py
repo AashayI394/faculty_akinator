@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
 
+import random
+
+
 app = Flask(__name__)
 
 from app import app
@@ -17,6 +20,7 @@ subject = c.fetchall()
 c.execute('''SELECT DISTINCT year_of_study FROM Facinator_MasterDB_Sheet1''')
 year = c.fetchall()
 
+con.close()
 
 @app.route("/")
 def index():
@@ -70,6 +74,95 @@ def page_not_found(e):
     return render_template('error.html'), 404
 
 @app.route("/main")
-def temp():
-    return render_template("layout2.html", items=table, department=department, subject=subject, year=year)
+def main():
+    random.shuffle(table)
+    return render_template("main.html", items=table, department=department, subject=subject, year=year)
+
+@app.route("/clear")
+def clear():
+    return redirect("/main")
+
+@app.route("/mail", methods=['GET', 'POST'])
+def mail():
+    if request.method == 'POST':
+        email = request.form['id']
+        con = sqlite3.connect("facinator.db")
+        d = con.cursor()
+        d.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE faculty_email = ?", (email,))
+        details = d.fetchall()
+        con.close()
+        return render_template("mail.html", i=details[0], items=table, department=department, subject=subject, year=year, lectures=details)
+    
+
+@app.route("/dept", methods=['GET', 'POST'])
+def dept():
+    if request.method == 'POST':
+
+        depts = request.form['dept']
+        
+        con = sqlite3.connect("facinator.db")
+        q = con.cursor()
+
+        q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE department_name = ?", (depts,))
+        dept = q.fetchall()
+
+        con.close()
+        return render_template("main.html", items=dept, department=department, subject=subject, year=year)
+    else:
+        return redirect("/main")
+    
+@app.route("/year", methods=['GET', 'POST'])
+def yos():
+    if request.method == 'POST':
+
+        y = request.form['year']
+        
+        con = sqlite3.connect("facinator.db")
+        q = con.cursor()
+
+        q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE year_of_study = ?", (y,))
+        y = q.fetchall()
+
+        con.close()
+        return render_template("main.html", items=y, department=department, subject=subject, year=year)
+    else:
+        return redirect("/main")
+    
+
+@app.route("/subject", methods=['GET', 'POST'])
+def subj():
+    if request.method == 'POST':
+
+        sub = request.form['subject']
+        
+        con = sqlite3.connect("facinator.db")
+        q = con.cursor()
+
+        q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE subject_name = ?", (sub,))
+        sub = q.fetchall()
+
+        con.close()
+        return render_template("main.html", items=sub, department=department, subject=subject, year=year)
+    else:
+        return redirect("/main")
+    
+
+@app.route("/mailto", methods=['GET', 'POST'])
+def mailto():
+    if request.method == 'POST':
+
+        email = request.form['email']
+        subject = request.form['mailsubject']
+        body = request.form['mailbody']
+
+        # print(email, subject, body)
+
+        # return redirect("/login")
+        return redirect(f"mailto:{email}?subject={subject}&body={body}")
+
+    
+    else:
+        return redirect("/main")
+
+
 
