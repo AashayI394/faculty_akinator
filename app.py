@@ -94,10 +94,14 @@ def mail():
         return render_template("mail.html", i=details[0], items=table, department=department, subject=subject, year=year, lectures=details)
     
 
+depts = None
+
+
 @app.route("/dept", methods=['GET', 'POST'])
 def dept():
     if request.method == 'POST':
 
+        global depts
         depts = request.form['dept']
         
         con = sqlite3.connect("facinator.db")
@@ -106,8 +110,20 @@ def dept():
         q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE department_name = ?", (depts,))
         dept = q.fetchall()
 
+        # Assuming the subject name is stored in the 7th column (index 6) of each tuple
+        subject_tuples = set()  # Using a set to keep track of unique subject names
+
+        # Iterate over each tuple in dept
+        for entry in dept:
+            # Append the subject name to the set
+            subject_name = entry[6]
+            subject_tuples.add((subject_name,))  # Adding as a single-element tuple to maintain structure
+
+        # Convert the set of tuples back to a list
+        subject_tuples = list(subject_tuples)
+
         con.close()
-        return render_template("main.html", items=dept, department=department, subject=subject, year=year)
+        return render_template("main.html", items=dept, department=department, subject=subject_tuples, year=year)
     else:
         return redirect("/main")
     
@@ -119,12 +135,25 @@ def yos():
         
         con = sqlite3.connect("facinator.db")
         q = con.cursor()
+        if depts:
+            q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE year_of_study = ? AND department_name = ?", (y,depts,))
+            y = q.fetchall()
+        else:
+            q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE year_of_study = ?", (y,))
+            y = q.fetchall()
 
-        q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE year_of_study = ?", (y,))
-        y = q.fetchall()
+        subject_tuples = set()  # Using a set to keep track of unique subject names
 
+        # Iterate over each tuple in dept
+        for entry in y:
+            # Append the subject name to the set
+            subject_name = entry[6]
+            subject_tuples.add((subject_name,))  # Adding as a single-element tuple to maintain structure
+
+        # Convert the set of tuples back to a list
+        subject_tuples = list(subject_tuples)
         con.close()
-        return render_template("main.html", items=y, department=department, subject=subject, year=year)
+        return render_template("main.html", items=y, department=department, subject=subject_tuples, year=year)
     else:
         return redirect("/main")
     
@@ -134,15 +163,25 @@ def subj():
     if request.method == 'POST':
 
         sub = request.form['subject']
-        
+
         con = sqlite3.connect("facinator.db")
         q = con.cursor()
 
         q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE subject_name = ?", (sub,))
         sub = q.fetchall()
+        subject_tuples = set()  # Using a set to keep track of unique subject names
+
+        # Iterate over each tuple in dept
+        for entry in sub:
+            # Append the subject name to the set
+            subject_name = entry[6]
+            subject_tuples.add((subject_name,))  # Adding as a single-element tuple to maintain structure
+
+        # Convert the set of tuples back to a list
+        subject_tuples = list(subject_tuples)
 
         con.close()
-        return render_template("main.html", items=sub, department=department, subject=subject, year=year)
+        return render_template("main.html", items=sub, department=department, subject=subject_tuples, year=year)
     else:
         return redirect("/main")
     
