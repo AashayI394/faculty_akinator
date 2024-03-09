@@ -7,11 +7,41 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
+    <script
+			  src="https://code.jquery.com/jquery-3.7.1.js"
+			  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+			  crossorigin="anonymous"></script>
+		
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
+
+    <script>
+      $(document).ready(function(){
+        $("#search").on("input",function(e){
+          textinbox = $("#search").val();
+          // console.log(text);
+          $.ajax({
+            method:"post",
+            url:"/search",
+            data:{text:textinbox},
+            success:function(res){
+              var data = "";
+                $.each(res,function(index,value){
+                  //  data += "<li>"+value[1]+"<li>"
+                    
+                  data += '<form action="{{ url_for("mail2") }}" method="post"><input type="submit" name="res" id="res" class="button-6" value="' + value[1] + '"></form>'
+                  
+                })
+                  $("#reslist").html(data);
+            }
+
+          })
+
+        })
+      })
+    </script>
 
 
     <style>
@@ -26,7 +56,7 @@
         }
 
         .filters{
-            flex: 1;
+            flex: 0.8;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -48,12 +78,11 @@
         }
 
         .profile{
-            flex: 1;
+            flex: 1.2;
             height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             background-color: aliceblue;
         }
 
@@ -211,12 +240,13 @@
         }
 
         .topbar{
-          margin: 25px;
+          margin-top: 100px;
 
         }
 
         .group {
         position: relative;
+        width: 100%;
         }
 
         .input {
@@ -224,7 +254,7 @@
         font-size: 16px;
         padding: 10px 10px 10px 5px;
         display: block;
-        width: 400px;
+        width: 100%;
         border: none;
         border-bottom: 1px solid #515151;
         background: transparent;
@@ -256,7 +286,7 @@
         .bar {
         position: relative;
         display: block;
-        width: 400px;
+        width: 100%;
         }
 
         .bar:before, .bar:after {
@@ -351,7 +381,66 @@
           margin-top: 30px;
         }
 
-        
+
+
+
+/* CSS */
+.button-6 {
+  width: 250px;
+  align-items: center;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+}
+
+.button-6:hover,
+.button-6:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.button-6:hover {
+  transform: translateY(-1px);
+}
+
+.button-6:active {
+  background-color: #F0F0F1;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: rgba(0, 0, 0, 0.65);
+  transform: translateY(0);
+}
+
+.resultbuttons{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: scroll;
+  margin-top: 15px;
+  margin-bottom: 20px;
+
+}
 
 
 
@@ -438,14 +527,7 @@
         <div class="middle">
 
 
-          <div class="topbar">
-            <div class="group">
-                <input required="" type="text" class="input">
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label>Facinator</label>
-            </div>
-        </div>
+          
 
 
         <div class="content">
@@ -459,6 +541,21 @@
 
 
         <div class="profile">
+
+          <div class="topbar">
+            <div class="group">
+                <input required="" type="text" class="input" id="search">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Facinator</label>
+            </div>
+          </div>
+            <div id="reslist" class="resultbuttons">
+
+            </div>
+
+      
+
 
 
         </div>

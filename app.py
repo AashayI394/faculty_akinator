@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 import random
 
@@ -86,13 +86,26 @@ def clear():
 def mail():
     if request.method == 'POST':
         email = request.form['id']
+    
         con = sqlite3.connect("facinator.db")
         d = con.cursor()
         d.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE faculty_email = ?", (email,))
         details = d.fetchall()
         con.close()
         return render_template("mail.html", i=details[0], items=table, department=department, subject=subject, year=year, lectures=details)
-    
+
+
+@app.route("/mail2", methods=['GET', 'POST'])
+def mail2():
+    if request.method == 'POST':
+        name = request.form['res']
+        con = sqlite3.connect("facinator.db")
+        d = con.cursor()    
+        d.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE faculty_name = ?", (name,))
+        details = d.fetchall()
+        con.close()
+        return render_template("mail.html", i=details[0], items=table, department=department, subject=subject, year=year, lectures=details)
+ 
 
 depts = None
 
@@ -202,6 +215,23 @@ def mailto():
     
     else:
         return redirect("/main")
+    
+@app.route("/search", methods=['GET', 'POST'])
+def search():
+    searchinput = request.form.get("text")
+
+    con = sqlite3.connect("facinator.db")
+    q = con.cursor()
+
+    q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE faculty_name LIKE '%{}%' OR department_name LIKE '%{}%'".format(searchinput,searchinput))
+    res = q.fetchall()
+
+    con.close()
+
+    if searchinput is None:
+        return None
+
+    return jsonify(res)
 
 
-
+    
