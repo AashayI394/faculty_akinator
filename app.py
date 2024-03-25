@@ -268,7 +268,17 @@ def editdata():
         con.close() 
 
         print(new_data)
-        return render_template("addnew.html", i = new_data)
+        name = new_data[0][1]
+        email = new_data[0][2]
+        gender = new_data[0][3]
+        department = new_data[0][4]
+        phdstatus =new_data[0][5]
+        office = new_data[0][6]
+        course = new_data[0][7]
+        yos = new_data[0][8]
+        semester = new_data[0][9]
+
+        return render_template("editdata.html", Dname=name, Demail=email, Dgender=gender, Ddepartment=department, Dphdstatus=phdstatus, Doffice=office, Dcourse=course, Dyos=yos, Dsemester=semester)
 
 @app.route("/savedata", methods=['GET', 'POST'])
 def savedata():
@@ -281,7 +291,10 @@ def savedata():
         cur.execute("SELECT * FROM pending WHERE id = ?", (id,))
         fetched_data = cur.fetchall(); 
         new_data = fetched_data[0]
-        print(new_data)
+        # print(new_data)
+
+        cur.execute("DELETE FROM pending WHERE id = ?", (id,))
+        con.commit()
         con.close()
 
         ## inserting data into main database
