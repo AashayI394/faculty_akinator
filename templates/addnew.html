@@ -44,6 +44,7 @@
 
     <input type="text" id="addnewname" name="addnewname" class="addnewelement" placeholder="Name">
     <br>
+
     
     <!-- email -->
     <label for="addnewemail">Faculty Outlook Email</label>
@@ -76,6 +77,15 @@
         <option value="META">Matallurgy and Material Sciences</option>
         <option value="PHY">Physics</option>
     </select>
+
+    <!-- office location -->
+    <label for="addnewofficelocation">Office Location</label>
+    <select class="form-select addnewelement" aria-label="Default select example" name="addnewofficelocation" id="addnewofficelocation">
+        <option value="Department" selected>Department</option>
+        <option value="AC">Academic Complex</option>
+        <option value="ENTC EXTN">ENTC Extension Building</option>  
+    </select>
+
 
     <br>
 
@@ -125,14 +135,15 @@
         </label>
     </div>
 
-
     <!-- submit / post -->
     <br><br>
     <input type="submit" name="addnew" id="addnew" class="btn btn-primary addnewelement" value="Submit" onclick="showAlert()">
 
- 
+    </form>  
 
-    </form>    
+
     
+{% block formjs %}
+{% endblock %}    
 </body>
 </html>

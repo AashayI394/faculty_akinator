@@ -154,7 +154,7 @@ def subj():
         con = sqlite3.connect("facinator.db")
         q = con.cursor()
 
-        q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE subject_name = ?", (sub,))
+        q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 where subject_name = ?", (sub,))
         sub = q.fetchall()
         subject_tuples = set()  # Using a set to keep track of unique subject names
 
@@ -228,7 +228,127 @@ def addnewcourse():
         courseyear = data.get('addnewcourseyear')
         coursesemester = data.get('addnewcoursesemester')
         status = data.get('phdstatus')
+        office = data.get('addnewofficelocation')
 
+        print(data)
+
+        connection = sqlite3.connect('pending.db')
+
+        cur = connection.cursor()
+
+        cur.execute("INSERT INTO pending (name, email, gender, department, doctorate, office, course, year_of_study, semester) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    (name, email, gender, department, status, office, course, courseyear, coursesemester)
+                    )
+
+        connection.commit()
+        connection.close()
     return redirect("/")
 
-    
+
+@app.route("/pending")
+def pending():
+    con = sqlite3.connect("pending.db")
+
+    cur = con.cursor()
+    cur.execute("SELECT * FROM PENDING")
+
+    new_data = cur.fetchall(); 
+    con.close()
+    return render_template("pending.html",data = list(reversed(new_data)))
+
+@app.route("/editdata", methods=['GET', 'POST'])
+def editdata():
+    if request.method == 'POST':    
+        id = request.form.get('edit')
+
+        con = sqlite3.connect("pending.db")
+        cur = con.cursor()
+        cur.execute("SELECT * FROM pending WHERE id = ?", (id,))
+        new_data = cur.fetchall(); 
+        con.close() 
+
+        print(new_data)
+        return render_template("addnew.html", i = new_data)
+
+@app.route("/savedata", methods=['GET', 'POST'])
+def savedata():
+    if request.method == 'POST':    
+        id = request.form.get('save')
+        
+        ## fetching data from pending
+        con = sqlite3.connect("pending.db")
+        cur = con.cursor()
+        cur.execute("SELECT * FROM pending WHERE id = ?", (id,))
+        fetched_data = cur.fetchall(); 
+        new_data = fetched_data[0]
+        print(new_data)
+        con.close()
+
+        ## inserting data into main database
+        con = sqlite3.connect("facinator.db")
+        cur = con.cursor()
+
+        cur.execute("INSERT INTO Facinator_MasterDB_Sheet1(faculty_name, faculty_email, department_name, subject_name, year_of_study, semester) VALUES(?,?,?,?,?,?)",
+                    (new_data[1], new_data[2], new_data[4], new_data[7], new_data[8], new_data[9])
+                    )
+        
+        con.commit()
+        con.close()
+        # print(new_data)
+        return redirect("/pending")
+
+@app.route("/deletedata", methods=['GET', 'POST'])
+def deletedata():
+   
+    id = request.form.get('delete')
+
+    con = sqlite3.connect("pending.db")
+    cur = con.cursor()
+    cur.execute("DELETE FROM pending WHERE id = ?", (id,))
+    con.commit()
+    con.close()
+
+    return redirect("/pending")
+
+
+
+
+
+
+
+
+
+
+
+
+
+### admin function start
+
+@app.route("/admin")
+def alldata():
+
+    con = sqlite3.connect("facinator.db")
+    cur = con.cursor()
+    cur.execute("SELECT * FROM Facinator_MasterDB_Sheet1")
+    data = cur.fetchall(); 
+    con.close()
+
+    return render_template("alldata.html", data =  list(reversed(data)))
+
+
+@app.route("/admindelete", methods=['GET', 'POST'])
+def admin_delete():
+    if request.method == 'POST':
+        id = request.form.get('admin_delete')
+
+        con = sqlite3.connect("facinator.db")
+        cur = con.cursor()
+        cur.execute("DELETE FROM Facinator_MasterDB_Sheet1 WHERE id = ?", (id,))
+        con.commit()
+        con.close()
+
+    return redirect("/admin")
+
+### admin function end
+
+

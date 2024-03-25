@@ -1,0 +1,16 @@
+{% extends "addnew.html" %}
+
+{% block formjs %}
+    <script>
+        document.getElementById('addnewname').value='{{ i[1] }}';
+        document.getElementById('addnewemail').value='{{ i[2] }}';
+        document.getElementById('addnewgender').value='{{ i[3] }}';
+        document.getElementById('addnewdepartment').value='{{ i[4] }}';
+        document.getElementById('addnewofficelocation').value='{{ i[6] }}';
+        document.getElementById('addnewcourse').value='{{ i[7] }}';
+        document.getElementById('addnewcourseyear').value='{{ i[8] }}';
+        document.getElementById('addnewcoursesemester').value='{{ i[9] }}';
+        document.getElementsByName('phdstatus').value='{{ i[5] }}';
+
+</script>
+{% endblock %}
