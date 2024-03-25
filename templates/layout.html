@@ -3,21 +3,586 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facinator</title>\
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@100..900&family=MedievalSharp&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+   
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@100..900&family=MedievalSharp&family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+   
+   <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+            background-image: url("../static/images/bgbgbg.jpg");
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: 'Times New Roman', Times, serif;
+
+        }
+
+        .bgimg{
+            
+            background-image: url("../static/images/genieback.jpeg");
+            position: absolute;
+            background-size: cover;
+            z-index: -10;
+            height: 100vh;
+            width: 100vw;
+            background-attachment: fixed;
+        }
+
+        .maincontainer{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            gap: 10px;
+            padding: 10px;
+        }
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <title>rppoop project</title>
+        .navbar{
+            display: flex;
+            flex-direction: column;
+            z-index: 100000;
+
+            width: 100%;
+            background-color: antiquewhite;
+            background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
+            /* background-image: linear-gradient( 111.4deg,  rgba(7,7,9,1) 6.5%, rgba(27,24,113,1) 93.2% ); */
+            border-radius: 25px;
+            color: aliceblue;
+            position: fixed;
+            width: 68%;
+            margin-top: 10px;
+        }
+
+        .modecontainer{
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            height: 60vh;
+            width: 60%;
+            min-width: 60%;
+            margin-top: 60px;
+            padding: 5px;
+            background-image: url("../static/images/lantern.jpg");
+            background-size: cover;
+            border-radius: 25px;
+
+        }
+
+        .modeoptions{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex: 2;
+        }
+
+        .akinatorgenie{
+            flex: 3;
+        }
+
+        .modebtn{
+            width: 250px;
+            height: 75px;
+            border-radius: 5px;
+        }
+
+        
+
+        .shadow__btn {
+            padding: 10px 20px;
+            border: none;
+            font-size: 17px;
+            color: #fff;
+            border-radius: 7px;
+            letter-spacing: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: 0.5s;
+            transition-property: box-shadow;
+        }
+
+        .shadow__btn {
+            background: rgb(0,140,255);
+            box-shadow: 0 0 25px rgb(0,140,255);
+        }
+
+        .shadow__btn:hover {
+        box-shadow: 0 0 5px rgb(0,140,255),
+                    0 0 25px rgb(0,140,255),
+                    0 0 50px rgb(0,140,255),
+                    0 0 100px rgb(0,140,255);
+        }
+
+        .btn{
+            color: #fff;
+        }
+
+        .aboutfacinator{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 200px;
+            width: 100vw;
+            color: beige;
+            margin-top: 50px;
+            /* font-family: "Grenze Gotisch", serif; */
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: 900;
+            font-size: 26px;
+
+        }
+
+        .aboutustitle{
+            font-size: 50px;
+        }
+
+        .content{
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .faq-container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 800px;
+            max-width: 800px;
+            color: beige;
+            margin-top: 100px;
+            margin-bottom: 100px;
+        }
+
+        .accordion-flush{
+          background-color: #29323c;
+          color: beige;
+        }
+
+        .faq-title{
+          font-family: 'Times New Roman', Times, serif;
+            font-size: 70px;
+            font-weight: 900;
+            height: 150px;
+            background-image: url("../static/images/faq-bg.png");
+            width: 800px;
+            background-attachment: fixed;
+            background-size: cover;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin: 10px;
+
+
+
+        }
+
+
+        .faq-question{
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .faq-answer{
+            position: relative;
+            padding-left: 5%;
+            padding-right: 5%;
+            font-size: 18px;
+        }
+
+        .teamtitle{
+          font-size: 70px;
+          font-family: 'Times New Roman', Times, serif;
+            font-weight: 900;
+            height: 150px;
+            background-image: url("../static/images/teamtitle.png");
+            width: 800px;
+            background-attachment: fixed;
+            background-size: cover;
+            color: beige;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin: 10px;
+
+        }
+
+        .team{
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          padding: 10px;
+          max-width: 800px;
+          border-radius: 10px;
+          height: auto;
+
+
+        }
+
+        .team-member{
+
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 30px;
+          font-family: 'Times New Roman', Times, serif;
+          padding: 20px;
+          
+          
+        }
+
+
+        /* footer cards - team member */
+
+        section.footercard {
+          position: relative;
+          width: 250px;
+          height: 250px;
+          background-color: #f2f2f2;
+          background-image: linear-gradient( 94.3deg,  rgba(26,33,64,1) 10.9%, rgba(81,84,115,1) 87.1% );
+          background-image: url("../static/images/yoda4.png");
+          background-size: contain;
+          background-repeat: no-repeat;
+
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          perspective: 1000px;
+          transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          border-radius: 15%;
+        }
+        .footercard svg {
+          fill: #000;
+          transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          border-radius: 3px;
+        }
+        .footercard:hover {
+          transform: scale(1.05);
+          box-shadow: 0 8px 16px #000000;
+          background-color: #f2f2f2;
+          background-image: radial-gradient( circle 732px at -23.9% -25.1%,  rgba(30,39,107,1) 6.1%, rgba(188,104,142,1) 100.2% );
+          color: #ffffff;
+        }
+
+        .footercard__content {
+          text-decoration: none;
+          color: #000000;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          padding: 20px;
+          box-sizing: border-box;
+          background-color: #f2f2f2;
+          background-image: radial-gradient( circle 732px at -23.9% -25.1%,  rgba(30,39,107,1) 6.1%, rgba(188,104,142,1) 100.2% );
+          transform: rotateX(-90deg);
+          transform-origin: bottom;
+          transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .footercard:hover .footercard__content {
+          transform: rotateX(0deg);
+        }
+
+        .footercard__title {
+          margin: 0;
+          padding-left: 5px;
+          font-size: 24px;
+          color: beige;
+          font-weight: 700;
+        }
+
+        .footercard:hover svg {
+          scale: 0;
+        }
+
+        .footercard__description {
+          margin: 10px 0 0;
+          font-size: 14px;
+          color: beige;
+          line-height: 1.4;
+        }
+
+
+        .footercard__title{
+          font-weight: 900;
+        }
+
+        .footercard__description{
+          font-weight: 600;
+        }
+
+        .meettheteam{
+          margin-top: 100px;
+          margin-bottom: 100px;
+        }
+
+        .feedback{
+          font-family: 'Times New Roman', Times, serif;
+          font-weight: 900;
+          height: 150px;
+          background-image: url("../static/images/mailbg.jpeg");
+          width: 800px;
+          background-size: contain;
+          color: beige;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          border-radius: 10px;
+          margin: 10px;
+        }
+
+        .feedbackform{
+          display: flex;
+          width: 70%;
+          height: 200px;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          gap: 20px;
+        }
+
+        .feedbackinput{
+          flex: 5;
+          height: 50px;
+        }
+
+        .feedbacksubmit{
+          flex: 2;
+        }
+
+        .getintouch{
+          font-size: 50px;
+          margin: 0;
+        }
+
+        footer{
+          width: 100vw;
+          background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 50px;
+        }
+
+
+
+
+        
+
+
+
+
+
+    </style>
 </head>
 <body>
+    <div class="bgimg">
+    </div>
 
-    {% block topbar %}
-    {% endblock %}
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Facinator</a>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/main">Facinator</a>
+              </li>
+              
+            </ul>
+            <a href="/login" class="d-flex btn">Sign-Up</a>
+          </div>
+        </div>
+      </nav>
+
+      
+    <div class="maincontainer">
+
+        <div class="aboutfacinator content">
+            <p class="aboutustitle">Facinator</p>
+            <p>Faculty Akinator (or Facinator) is a faculty recommendation system with a personalized "guess who?" game for students of COEP Tech </p>
+        </div>
+
+
+        
+        <div class="modecontainer">
+            <div class="modeoptions">
+                
+                <a href="/login">
+                    <button class="shadow__btn modebtn">
+                        Facinator
+                    </button>
+                </a>
+                <a href="https://en.akinator.com/theme-selection">
+                  <button class="shadow__btn modebtn">
+                  Akinator
+                  </button>
+              </a>
+                <a href="/">
+                    <button class="shadow__btn modebtn">
+                        game-mode
+                    </button>
+                </a>
+            </div>
+            <div class="akinatorgenie">
+            </div>
+        </div> 
+    </div>
 
 
 
+    <div class="faq-container">
+        <div class="faq-title">F. A. Q.</div>
+
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed faq-question" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    What is Faculty Akinator or Facinator ?
+                </button>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body faq-answer">
+                    Faculty Akinator (or Facinator) is a faculty recommendation system with a personalized "guess who?" game for students of COEP Tech
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed faq-question" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    Does Facinator takes inspiration from the famous game Akinator ?
+                </button>
+              </h2>
+              <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body faq-answer">
+                    Yes! Facinator is based on the online french video game - Akinator which attempts to determine what fictional or real-life character, object, or animal the player is thinking of by asking a series of questions.    
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingThree">
+                <button class="accordion-button collapsed faq-question" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    How accurate is Facinator ?
+                </button>
+              </h2>
+              <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body faq-answer">
+                    Facinator's accuracy depends on the information provided in its database and the questions asked during the game. The more specific and accurate your responses, the more likely it is to guess/recommend the faculty member you seek.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFour">
+                  <button class="accordion-button collapsed faq-question" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                    Can I suggest new faculty members to be added to Facinator ?
+                  </button>
+                </h2>
+                <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body faq-answer">
+                    Yes, we encourage suggestions for new faculty members to be added to Facinator. Simply fill out the form 'Help Us !' section with the name and some distinctive features of the faculty member, and our webapp auto-updates them in the database.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFive">
+                  <button class="accordion-button collapsed faq-question" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                    I'm having trouble with Facinator. Who can I contact for help?
+                  </button>
+                </h2>
+                <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body faq-answer">
+                    If you are experiencing any issues with Facinator or have questions about how to play, please reach out to our support team mentioned in our footer. We are here to help troubleshoot any problems and ensure you have a great user experience.
+                  </div>
+                </div>
+              </div>
+
+
+          </div>
+
+
+    </div>
+
+    <div class="meettheteam">
+      <div class="teamtitle">Meet the Team</div>
+
+    <div class="team">
+      <div class="team-member">
+        <section id="footercard1" class="footercard">
+          <a class="footercard__content" href="mailto:inamdaras22.comp@coeptech.ac.in">
+            <p class="footercard__title">AASHAY I.</p>
+            <p class="footercard__description">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae
+              justo vel lorem tincidunt ultrices at non nunc. Donec in sapien viverra,
+              tincidunt augue id, efficitur massa.
+            </p>
+          </a>
+        </section>
+      </div>
+      
+      <div class="team-member">
+        <section id="footercard1" class="footercard">
+          <a class="footercard__content" href="mailto:jadhavab22.comp@coeptech.ac.in">
+            <p class="footercard__title">ABHIJEET J.</p>
+            <p  class="footercard__description">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae
+              justo vel lorem tincidunt ultrices at non nunc. Donec in sapien viverra,
+              tincidunt augue id, efficitur massa.
+            </p>
+          </a>
+        </section>
+      </div>
+
+  </div>
+
+    </div>
+
+    <footer>
+      <div class="feedback">
+        <p class="getintouch">Get in Touch</p>
+        <form action="url_for{{ feedback }}" class="feedbackform">
+          <input type="text" placeholder="Your feedback is valuable" class="feedbackinput">
+          <input type="submit" value="POST" class="btn btn-primary" class="feedbacksubmit">
+        </form>  
+      </div>
+    </footer>
+        
+
+
+
+
+
+
+    
 </body>
 </html>
