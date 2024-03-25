@@ -207,5 +207,28 @@ def search():
 
     return jsonify(res)
 
+@app.route("/addnew")
+def addnew():
+    return render_template("addnew.html")
+
+@app.route("/addnewcourse", methods=['GET', 'POST'])
+def addnewcourse():
+
+
+    if request.method == 'POST':
+
+        data = request.form
+        # print(data)
+
+        name = data.get('addnewname')
+        email = data.get('addnewemail')
+        gender = data.get('addnewgender')
+        department = data.get('addnewdepartment')
+        course = data.get('addnewcourse')
+        courseyear = data.get('addnewcourseyear')
+        coursesemester = data.get('addnewcoursesemester')
+        status = data.get('phdstatus')
+
+    return redirect("/")
 
     
