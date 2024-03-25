@@ -265,6 +265,8 @@ def editdata():
         cur = con.cursor()
         cur.execute("SELECT * FROM pending WHERE id = ?", (id,))
         new_data = cur.fetchall(); 
+        cur.execute("DELETE FROM pending WHERE id = ?", (id,))
+        con.commit()
         con.close() 
 
         print(new_data)
