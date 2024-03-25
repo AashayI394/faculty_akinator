@@ -1,14 +1,23 @@
 import sqlite3
 
 # Connect to the SQLite database
-conn = sqlite3.connect('college_faculty.db')
+conn = sqlite3.connect('pending.db')
 cursor = conn.cursor()
 
 # Create tables
-# cursor.execute('''CREATE TABLE IF NOT EXISTS departments (
-#                     id INTEGER PRIMARY KEY,
-#                     name TEXT NOT NULL
-#                 )''')
+cursor.execute('''CREATE TABLE IF NOT EXISTS pending (
+                    id INTEGER PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    email TEXT NOT NULL,
+                    gender TEXT NOT NULL,
+                    department TEXT NOT NULL,
+                    doctorate TEXT NOT NULL,
+                    office TEXT NOT NULL,
+                    course TEXT NOT NULL,
+                    year_of_study INTEGER NOT NULL,
+                    semester INTEGER NOT NULL
+            
+               )''')
 
 # cursor.execute('''CREATE TABLE IF NOT EXISTS year_of_study (
 #                     id INTEGER PRIMARY KEY,
@@ -79,23 +88,23 @@ cursor = conn.cursor()
 #     print(i)
 
 #Execute a query to fetch subjects along with their department and year of study
-cursor.execute('''SELECT s.id, s.name AS subject_name, d.name AS department_name, y.year AS year_of_study, s.semester
-                  FROM subjects s
-                  JOIN departments d ON s.department_id = d.id
-                  JOIN year_of_study y ON s.year_of_study_id = y.id
-                  WHERE department_name LIKE "Electr%"''')
+# cursor.execute('''SELECT s.id, s.name AS subject_name, d.name AS department_name, y.year AS year_of_study, s.semester
+#                   FROM subjects s
+#                   JOIN departments d ON s.department_id = d.id
+#                   JOIN year_of_study y ON s.year_of_study_id = y.id
+#                   WHERE department_name LIKE "Electr%"''')
 
-results = cursor.fetchall()
-print("Number of rows fetched:", len(results))
-print()
-# # Print the results
-for row in results:
-    print("Subject ID: ", row[0])
-    print("Subject:", row[1])
-    print("Department:", row[2])
-    print("Year of Study:", row[3])
-    print("Semester: ",row[4] )  
-    print() #newline for better formatting
+# results = cursor.fetchall()
+# print("Number of rows fetched:", len(results))
+# print()
+# # # Print the results
+# for row in results:
+#     print("Subject ID: ", row[0])
+#     print("Subject:", row[1])
+#     print("Department:", row[2])
+#     print("Year of Study:", row[3])
+#     print("Semester: ",row[4] )  
+#     print() #newline for better formatting
 
 
 # #Execute a query to fetch faculties along with their department and subject details
