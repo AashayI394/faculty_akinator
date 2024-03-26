@@ -17,9 +17,9 @@
     <style>
         body{
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding-top: 50px;
             padding-bottom: 50px;
         }
 
@@ -28,7 +28,8 @@
             flex-direction: column;
             width: 90vw;
             max-width: 500px; 
-            gap: 10px;           
+            gap: 10px;
+            margin-top: 20px;           
 
         }
         .addnewelement{
@@ -39,6 +40,60 @@
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="/"><img src="../static/logo/logo3.png" alt="Facinator" class="facinator_logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/facinator_game_mode">Game-Mode</a>
+            <a class="nav-item nav-link" href="/pending">Pending-Requests</a>
+            <a class="nav-item nav-link" href="https://en.akinator.com/theme-selection">Akinator</a>
+            <a class="nav-item nav-link" href="/addnew">Help-US-Improve</a>
+            <a class="nav-item nav-link" href="/login">Admin</a>
+          </div>
+        </div>
+      </nav>
+
+
+      <style>
+        nav{
+            width: 100%;
+        }
+
+        .facinator_logo{
+            max-height: 60px;
+            max-width: 60px;
+            margin-left: 10px;
+            border-radius: 50%;
+        }
+
+
+
+
+        .collapse{
+            display: flex;
+            justify-content: center;
+        }
+
+      </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <form action="/addnewcourse" method="POST" class="addnewform">
     <!-- name -->
     <label for="addnewname">Faculty Name</label>
