@@ -5,6 +5,17 @@ cursor = conn.cursor()
 
 # q1="Is Your Faculty in {dept} ?".format(dept=dept)
 
+
+# header = ["dept", "yos", "gender", "doc", "office"]
+# i is random number
+
+#col = header[i]
+
+# if col == dept:
+#     res = dept[]
+
+
+
 # dept = ["Applied Science","Civil Engineering","Computer Engineering","ENTC Engineering","Electrical Engineering","Instrumentation Engineering","Mathematics","Mechanical Engineering","Metallury & Materials","Physics"]
 # yos = [1, 2, 3, 4]
 # gender = ["female", "male"]
