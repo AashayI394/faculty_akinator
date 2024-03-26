@@ -9,15 +9,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@100..900&family=MedievalSharp&family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Rakkas&display=swap" rel="stylesheet">
 
     <script>
         function displayRandomGenie(){
             var images = [
-                "../static/akinator_images/aki1.png",
-                "../static/akinator_images/aki2.png",
-                "../static/akinator_images/aki3.png",
-                "../static/akinator_images/aki4.png",
-                "../static/akinator_images/aki5.png"
+                "../static/akinator_images/aki1.webp",
+                "../static/akinator_images/aki2.webp",
+                "../static/akinator_images/aki3.webp",
+                "../static/akinator_images/aki4.webp",
+                "../static/akinator_images/aki5.webp",
+                "../static/akinator_images/aki6.webp"
             ];
 
             //get a random index from images array
@@ -69,6 +73,7 @@
         .thread-title{
             font-size: 20px;
             margin: 20px;
+            font-family:Georgia, 'Times New Roman', Times, serif;
 
         }
 
@@ -78,11 +83,21 @@
 
         .thread-question{
             background-color: azure;
+            font-optical-sizing: auto;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            font-weight: 800;
+            font-style: normal;
+            font-size: 18px;
 
         }
 
         .thread-answer{
             background-color: bisque;
+            font-optical-sizing: auto;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
         }
 
 
@@ -124,8 +139,11 @@
         .game-stmt{
             margin: 10px;
             font-family:Georgia, 'Times New Roman', Times, serif;
-            font-size: 16px;
-
+            font-size: 24px;
+            font-optical-sizing: auto;
+            font-style: normal;
+            font-weight: 900;
+    
         }
 
         .game-option{
@@ -146,17 +164,24 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-family:Georgia, 'Times New Roman', Times, serif;
         }
 
 
         .game-genie-pic{
-            width: 90%;
-            height: 90%;
-            max-height: 600px;
-            max-width: 400px;
+            width: 150%;
+            height: 150%;
+            max-height: 1000px;
+            max-width: 800px;
             background-repeat: no-repeat;
             background-size: contain;
 
+        }
+
+        .btn{
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            font-size: 30px;
+            font-weight: 900;
         }
 
 
