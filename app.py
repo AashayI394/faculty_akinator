@@ -41,7 +41,7 @@ def login():
             #error = 'Invalid Credentials. Please try again.'
             return redirect("/*")
         else:
-            return redirect("/main")
+            return redirect("/admin")
     return render_template("login.html", error=error)
 
 
