@@ -26,6 +26,12 @@ con.close()
 def index():
     return render_template("layout.html")
 
+
+@app.route("/facinator_game_mode")
+def gamemode():
+    return render_template("game.html")
+    
+
 # Route for handling the login page logic
 @app.route('/login', methods=['GET', 'POST'])
 def login():
