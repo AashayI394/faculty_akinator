@@ -9,19 +9,19 @@ def get_faculties(department_id, year_of_study, subject_id):
     try:
         if department_id == 0 and year_of_study == 0 and subject_id == 0:
             # Return list of all faculties
-            c.execute("SELECT faculty_name FROM Facinator_MasterDB_Sheet1")
+            c.execute("SELECT faculty_name FROM admindb")
         elif department_id != 0 and year_of_study == 0 and subject_id == 0:
             # Return faculties with specified department_id
-            c.execute("SELECT faculty_name FROM Facinator_MasterDB_Sheet1 WHERE CAST(department_id AS FLOAT) = ?", (department_id,))
+            c.execute("SELECT faculty_name FROM admindb WHERE CAST(department_id AS FLOAT) = ?", (department_id,))
         elif department_id == 0 and year_of_study != 0 and subject_id == 0:
             # Return faculties with specified year_of_study
-            c.execute("SELECT faculty_name FROM Facinator_MasterDB_Sheet1 WHERE CAST(year_of_study AS FLOAT) = ?", (year_of_study,))
+            c.execute("SELECT faculty_name FROM admindb WHERE CAST(year_of_study AS FLOAT) = ?", (year_of_study,))
         elif department_id == 0 and year_of_study == 0 and subject_id != 0:
             # Return faculties with specified subject_id
-            c.execute("SELECT faculty_name FROM Facinator_MasterDB_Sheet1 WHERE CAST(subject_id AS FLOAT) = ?", (subject_id,))
+            c.execute("SELECT faculty_name FROM admindb WHERE CAST(subject_id AS FLOAT) = ?", (subject_id,))
         else:
             # Return faculties matching all three parameters
-            c.execute("SELECT faculty_name FROM Facinator_MasterDB_Sheet1 WHERE CAST(department_id AS FLOAT) = ? AND CAST(year_of_study AS FLOAT) = ? AND CAST(subject_id AS FLOAT) = ?", (department_id, year_of_study, subject_id))
+            c.execute("SELECT faculty_name FROM admindb WHERE CAST(department_id AS FLOAT) = ? AND CAST(year_of_study AS FLOAT) = ? AND CAST(subject_id AS FLOAT) = ?", (department_id, year_of_study, subject_id))
 
         # Fetch and return the results
         items = c.fetchall()
