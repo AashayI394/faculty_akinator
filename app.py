@@ -11,13 +11,13 @@ con = sqlite3.connect("facinator.db")
 c = con.cursor()
 
  #Execute a query to fetch faculties along with their department and subject details
-c.execute('''SELECT * FROM Facinator_MasterDB_Sheet1''')
+c.execute('''SELECT * FROM admindb''')
 table = c.fetchall()
-c.execute('''SELECT DISTINCT department_name FROM Facinator_MasterDB_Sheet1''')
+c.execute('''SELECT DISTINCT department_name FROM admindb''')
 department = c.fetchall()
-c.execute('''SELECT DISTINCT subject_name FROM Facinator_MasterDB_Sheet1''')
+c.execute('''SELECT DISTINCT subject_name FROM admindb''')
 subject = c.fetchall()
-c.execute('''SELECT DISTINCT year_of_study FROM Facinator_MasterDB_Sheet1''')
+c.execute('''SELECT DISTINCT year_of_study FROM admindb''')
 year = c.fetchall()
 
 con.close()
@@ -63,7 +63,7 @@ def mail():
     
         con = sqlite3.connect("facinator.db")
         d = con.cursor()
-        d.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE faculty_email = ?", (email,))
+        d.execute("SELECT * FROM admindb WHERE faculty_email = ?", (email,))
         details = d.fetchall()
         con.close()
         return render_template("mail.html", i=details[0], items=table, department=department, subject=subject, year=year, lectures=details)
@@ -75,7 +75,7 @@ def mail2():
         name = request.form['res']
         con = sqlite3.connect("facinator.db")
         d = con.cursor()    
-        d.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE faculty_name = ?", (name,))
+        d.execute("SELECT * FROM admindb WHERE faculty_name = ?", (name,))
         details = d.fetchall()
         con.close()
         return render_template("mail.html", i=details[0], items=table, department=department, subject=subject, year=year, lectures=details)
@@ -94,7 +94,7 @@ def dept():
         con = sqlite3.connect("facinator.db")
         q = con.cursor()
 
-        q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE department_name = ?", (depts,))
+        q.execute("SELECT * FROM admindb WHERE department_name = ?", (depts,))
         dept = q.fetchall()
 
         # Assuming the subject name is stored in the 7th column (index 6) of each tuple
@@ -123,10 +123,10 @@ def yos():
         con = sqlite3.connect("facinator.db")
         q = con.cursor()
         if depts:
-            q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE year_of_study = ? AND department_name = ?", (y,depts,))
+            q.execute("SELECT * FROM admindb WHERE year_of_study = ? AND department_name = ?", (y,depts,))
             y = q.fetchall()
         else:
-            q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE year_of_study = ?", (y,))
+            q.execute("SELECT * FROM admindb WHERE year_of_study = ?", (y,))
             y = q.fetchall()
 
         subject_tuples = set()  # Using a set to keep track of unique subject names
@@ -154,7 +154,7 @@ def subj():
         con = sqlite3.connect("facinator.db")
         q = con.cursor()
 
-        q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 where subject_name = ?", (sub,))
+        q.execute("SELECT * FROM admindb where subject_name = ?", (sub,))
         sub = q.fetchall()
         subject_tuples = set()  # Using a set to keep track of unique subject names
 
@@ -197,7 +197,7 @@ def search():
     con = sqlite3.connect("facinator.db")
     q = con.cursor()
 
-    q.execute("SELECT * FROM Facinator_MasterDB_Sheet1 WHERE faculty_name LIKE '%{}%' OR department_name LIKE '%{}%'".format(searchinput,searchinput))
+    q.execute("SELECT * FROM admindb WHERE faculty_name LIKE '%{}%' OR department_name LIKE '%{}%'".format(searchinput,searchinput))
     res = q.fetchall()
 
     con.close()
@@ -292,8 +292,10 @@ def savedata():
         cur = con.cursor()
         cur.execute("SELECT * FROM pending WHERE id = ?", (id,))
         fetched_data = cur.fetchall(); 
+        print(fetched_data)
         new_data = fetched_data[0]
-        # print(new_data)
+        
+        print(new_data)
 
         cur.execute("DELETE FROM pending WHERE id = ?", (id,))
         con.commit()
@@ -303,8 +305,8 @@ def savedata():
         con = sqlite3.connect("facinator.db")
         cur = con.cursor()
 
-        cur.execute("INSERT INTO Facinator_MasterDB_Sheet1(faculty_name, faculty_email, department_name, subject_name, year_of_study, semester) VALUES(?,?,?,?,?,?)",
-                    (new_data[1], new_data[2], new_data[4], new_data[7], new_data[8], new_data[9])
+        cur.execute("INSERT INTO admindb(faculty_name, faculty_email, department_name, subject_name, year_of_study, semester, gender, doctorate, office) VALUES(?,?,?,?,?,?,?,?,?)",
+                    (new_data[1], new_data[2], new_data[4], new_data[7], new_data[8], new_data[9], new_data[3], new_data[5], new_data[6])
                     )
         
         con.commit()
@@ -344,7 +346,7 @@ def alldata():
 
     con = sqlite3.connect("facinator.db")
     cur = con.cursor()
-    cur.execute("SELECT * FROM Facinator_MasterDB_Sheet1")
+    cur.execute("SELECT * FROM admindb")
     data = cur.fetchall(); 
     con.close()
 
@@ -355,10 +357,11 @@ def alldata():
 def admin_delete():
     if request.method == 'POST':
         id = request.form.get('admin_delete')
+        print(id)
 
         con = sqlite3.connect("facinator.db")
         cur = con.cursor()
-        cur.execute("DELETE FROM Facinator_MasterDB_Sheet1 WHERE id = ?", (id,))
+        cur.execute("DELETE FROM admindb WHERE id = ?", (id,))
         con.commit()
         con.close()
 
