@@ -28,7 +28,7 @@ def index():
 
 
 @app.route("/facinator_game_mode")
-def gamemode():
+def game_execute():
     return render_template("game.html")
     
 
