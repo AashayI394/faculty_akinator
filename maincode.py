@@ -7,17 +7,17 @@ cursor = conn.cursor()
 
 result = query_all()
 
-def facinator_game():
+gametuple=[]
+
+def facinator_game(col,res,val):
 	global result
-	while(len(result)>1):
-		intermediate = create_query()  #intermediate is a list of length two
-		print(intermediate)
-		print()
-		tempres = singlequery(intermediate[0],intermediate[1])
-		result = find_intersection(result, tempres)
-		print(result)
-		print("\n\n\n")
-	return result
+	global gametuple
+	if len(result)>1:
+		gametuple.append((col,res,val))
+		tempres = singlequery(col,res)
+		if val:
+			result = find_intersection(result, tempres)
+		else:
+			tempres = list(set(result) - set(tempres))
+			result = find_intersection(result, tempres)
 
-
-testcase = facinator_game()
