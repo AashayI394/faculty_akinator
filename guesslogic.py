@@ -1,5 +1,5 @@
 import sqlite3, random
-
+from math import ceil
 
 # Function to query the database based on user choices
 # def query_faculty(criteria):
@@ -34,12 +34,16 @@ for sub in subs:
 
 
 
-cursor.execute("SELECT DISTINCT semester FROM admindb")
-subs = cursor.fetchall()
-semester = []
-for sub in subs:
-    semester.append(sub[0])
-    semester_temp = semester
+# cursor.execute("SELECT DISTINCT semester FROM admindb")
+# subs = cursor.fetchall()
+# semester = []
+# for sub in subs:
+#     semester.append(sub[0])
+#     semester_temp = semester
+
+semester_temp = [1,2,3,4,5,6,7,8]
+
+
 
 
 cursor.execute("SELECT DISTINCT gender FROM admindb")
@@ -94,8 +98,11 @@ def singlequery(column, res):
 	return result
 
 
-def generate_random_number(upper_limit):
-    return random.randint(1, upper_limit)
+def generate_random_number(length):
+    if length < 1:
+        raise ValueError("Length must be at least 1")
+    return random.randint(0, length - 1)
+
 
 def find_intersection(list1, list2):
     # Convert lists to sets for easy intersection calculation
@@ -107,6 +114,16 @@ def find_intersection(list1, list2):
     
     return intersection
 
+def query_subjects1(years):
+    cursor.execute("SELECT DISTINCT subject_name FROM admindb WHERE year_of_study IN ({})".format(",".join(map(str, years))))
+    subjects = cursor.fetchall()
+    return [subject[0] for subject in subjects]
+
+def query_subjects2(sem):
+    cursor.execute("SELECT DISTINCT subject_name FROM admindb WHERE semester IN ({})".format(",".join(map(str, sem))))
+    subjects = cursor.fetchall()
+    return [subject[0] for subject in subjects]
+
 
 def create_query():
 	n = generate_random_number(len(col_header)-1)
@@ -117,7 +134,14 @@ def create_query():
 			i = generate_random_number(len(dept_temp)-1)
 			res = dept_temp[i]
 			dept_temp.pop(i)
+			col_header.pop(n)
 		case "subject_name":
+			
+			years = yos_temp
+			subject_temp[:] = query_subjects1(years)
+			
+			sem = semester_temp
+			subject_temp[:] = query_subjects2(sem)
 			i = generate_random_number(len(subject_temp)-1)
 			res = subject_temp[i]
 			subject_temp.pop(i)
@@ -130,6 +154,7 @@ def create_query():
 			i = generate_random_number(len(office_temp)-1)
 			res = office_temp[i]
 			office_temp.pop(i)
+			col_header.pop(n)
 		case "doctorate":
 			i = generate_random_number(len(doc_temp)-1)
 			res = doc_temp[i]
@@ -139,11 +164,15 @@ def create_query():
 			i = generate_random_number(len(yos_temp)-1)
 			res = yos_temp[i]
 			yos_temp.pop(i)
+			#filter semesters based on the year selected
+			semester_temp[:] = [num for num in semester_temp if num==int(res)*2 or num == int(res)*2 -1]
 			col_header.pop(n)
 		case "semester":
 			i = generate_random_number(len(semester_temp)-1)
 			res = semester_temp[i]
 			semester_temp.pop(i)
+			#filter year based on the semester selected
+			yos_temp[:] = [num for num in yos_temp if num==ceil(float(res)/2) ]
 			col_header.pop(n)
 	return [col,res]
 
