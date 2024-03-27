@@ -1,9 +1,32 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 
-import random
+import random,sqlite3
 from guesslogic import generate_random_number, find_intersection, create_query, singlequery, query_all, dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp
 
+
+# game logic start
 question_thread = []
+conn = sqlite3.connect('facinator.db')
+cursor = conn.cursor()
+result = query_all()
+gametuple=[]
+
+col_res = []
+
+def facinator_game(col,res,val):
+	global result
+	global gametuple
+	if len(result)>1:
+		gametuple.append((col,res,val))
+		tempres = singlequery(col,res)
+		if val:
+			result = find_intersection(result, tempres)
+		else:
+			tempres = list(set(result) - set(tempres))
+			result = find_intersection(result, tempres)
+    
+
+# game logic end    
 
 app = Flask(__name__)
 
@@ -53,7 +76,7 @@ def create_question(col, res):
 
     match col:
         case "department_name":
-            q = "Does the Faculty belong to " + res + "department ?"
+            q = "Does the Faculty belong to " + res + " department ?"
         case "subject_name":
             q = "Does this Faculty teach the course " + res +" ?"
         case "gender":
@@ -66,9 +89,9 @@ def create_question(col, res):
         case "office":
             q = "Is this faculty's office located in the " + res +" ?"
         case "year_of_study":
-            q = "Does this Faculty conduct any class year "+ res + " ?"
+            q = "Does this Faculty conduct any class year "+ str(res) + " ?"
         case "semester":
-            q = "Does the Faculty teach any course of semester " + res + " ?"
+            q = "Does the Faculty teach any course of semester " + str(res) + " ?"
     return q
 
 
@@ -81,26 +104,43 @@ def index():
 
 @app.route("/facinator_game_mode", methods=['GET', 'POST'])
 def game_execute():
+    global question_thread
+    global col_res
+    global result
+
+    if len(result) == 1:
+        return render_template("/*")
+
+
     if request.method == 'GET':
-        temp = create_query()
+
+        
+        temp = create_query(0)
         col = temp[0]
         res = temp[1]
+
+        col_res.append((col,res))
 
         # col = "department_name"
         # res = "Mathematics"
         # question_thread = []
-        global question_thread
+        
         q = create_question(col, res)
-        return render_template("game.html", question_thread=question_thread)
+        return render_template("game.html", q=q)
     if request.method == 'POST':
         val = request.form['game_answer']
-        global question_thread
-        question_thread[-1][1] = val
 
-        
+        print("\n\n"+ val +"\n\n")
+        # question_thread[-1][1] = val
+
+        col = col_res[0][0]
+        res = col_res[0][1]
 
 
-        
+        facinator_game(col,res,val)
+    return redirect("/facinator_game_mode")
+
+
 
         
     
