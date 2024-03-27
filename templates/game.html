@@ -55,21 +55,25 @@
             margin-top: 25px;
             /* background-color: antiquewhite; */
             padding: 5px;
+            gap: 10px;
 
         }
 
         .game-left{
             flex: 6;
             height: 100%;
-            /* background-color: azure; */
+            background-color:seashell;
             display: flex;
             flex-direction: row;
+            border-radius: 10px;
+
         }
 
         .game-right{
             flex: 4;
             height: 100%;
             background-color:aliceblue;
+            overflow-y: scroll;
 
             display: flex;
             flex-direction: column;
@@ -94,16 +98,18 @@
             font-weight: 800;
             font-style: normal;
             font-size: 18px;
+            padding: 5px;
 
         }
 
         .thread-answer{
-            background-color: bisque;
+            background-color:cornsilk;
             font-optical-sizing: auto;
             font-family:Georgia, 'Times New Roman', Times, serif;
             font-style: normal;
             font-weight: 700;
             font-size: 16px;
+            padding: 5px;
         }
 
 
@@ -160,6 +166,7 @@
             justify-content: center;
             flex-direction: column;
             align-items: center;
+            margin-bottom: 20px;
         }
 
         .game-option-element{
@@ -248,7 +255,9 @@
 
             <div class="game-body">
                 <div class="game-question">
-                    <p class="game-stmt">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id harum, consectetur iste laboriosam corrupti quae ratione animi ipsum, placeat voluptate, libero maxime </p>
+                    <p class="game-stmt">
+                        {{ question_thread[-1][0] }}
+                    </p>
                 </div>
                 <div class="game-option">
 
@@ -275,30 +284,20 @@
             <div class="thread-body">
 
             <ol>
-                <li>
-                    <p class="thread-question">First question?</p>
-                    <p class="thread-answer">first answer.</p>
-                </li>
 
+                {% for i in question_thread %}
+                <li>
+                    <p class="thread-question">{{ i[0] }}</p>
+                    <p class="thread-answer">{{ i[1] }}</p>
+                </li>
+                {% endfor %}
+<!-- 
                 <li>
                     <p class="thread-question">First question?</p>
                     <p class="thread-answer">first answer.</p>
-                </li>
+                </li> -->
 
-                <li>
-                    <p class="thread-question">First question?</p>
-                    <p class="thread-answer">first answer.</p>
-                </li>
 
-                <li>
-                    <p class="thread-question">First question?</p>
-                    <p class="thread-answer">first answer.</p>
-                </li>
-
-                <li>
-                    <p class="thread-question">First question?</p>
-                    <p class="thread-answer">first answer.</p>
-                </li>
             </ol>
 
 
