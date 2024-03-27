@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 import random
+from guesslogic import generate_random_number, find_intersection, create_query, singlequery, query_all, dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp
 
+question_thread = []
 
 app = Flask(__name__)
 
@@ -22,14 +24,85 @@ year = c.fetchall()
 
 con.close()
 
+
+def create_question(col, res):
+    # if col == "department_name" %}
+    #     Does the Faculty belong to {{ res }} department ?
+
+    # if col == "subject_name" %}
+    #     Does this Faculty teach the course - {{ res }} ?
+    
+
+    # if col == "gender" %}
+    #     Is the Faculty {{ res }} ?
+
+    # if col == "doctorate" %}
+    #     Does this Faculty member {% if res == "no" %}do not{% endif %} have a PhD ?
+
+    # if col == "department" %}
+    #     Does the Faculty belong to {{ res }} department ?
+
+    # if col == "office" %}
+    #     Is this faculty's office located in the {{ res }} ?
+
+    # if col == "year_of_study" %}
+    #     Does this Faculty conduct any class year {{ res }}
+
+    # if col == "semester" %}
+    #     Does the Faculty teach any course of semester {{ res }} ?
+
+    match col:
+        case "department_name":
+            q = "Does the Faculty belong to " + res + "department ?"
+        case "subject_name":
+            q = "Does this Faculty teach the course " + res +" ?"
+        case "gender":
+            q = "Is the Faculty "+ res +" ?"
+        case "doctorate":
+            if res == "yes":
+                q = "Does this Faculty member have a PhD ?"
+            else:
+                q = "Is this Faculty no a PhD holder ?"
+        case "office":
+            q = "Is this faculty's office located in the " + res +" ?"
+        case "year_of_study":
+            q = "Does this Faculty conduct any class year "+ res + " ?"
+        case "semester":
+            q = "Does the Faculty teach any course of semester " + res + " ?"
+    return q
+
+
+
+
 @app.route("/")
 def index():
     return render_template("layout.html")
 
 
-@app.route("/facinator_game_mode")
+@app.route("/facinator_game_mode", methods=['GET', 'POST'])
 def game_execute():
-    return render_template("game.html")
+    if request.method == 'GET':
+        temp = create_query()
+        col = temp[0]
+        res = temp[1]
+
+        # col = "department_name"
+        # res = "Mathematics"
+        # question_thread = []
+        global question_thread
+        q = create_question(col, res)
+        return render_template("game.html", question_thread=question_thread)
+    if request.method == 'POST':
+        val = request.form['game_answer']
+        global question_thread
+        question_thread[-1][1] = val
+
+        
+
+
+        
+
+        
     
 
 # Route for handling the login page logic
@@ -332,6 +405,8 @@ def deletedata():
     con.close()
 
     return redirect("/pending")
+
+
 
 
 

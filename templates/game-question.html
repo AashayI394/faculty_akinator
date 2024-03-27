@@ -1,0 +1,46 @@
+{% extends 'game.html' %}
+
+
+<!-- question plate -->
+{% block question %}
+    {% if col == "department_name" %}
+        Does the Faculty belong to {{ res }} department ?
+    {% endif %}
+
+    {% if col == "subject_name" %}
+        Does this Faculty teach the course - {{ res }} ?
+    {% endif %}
+
+    {% if col == "gender" %}
+        Is the Faculty {{ res }} ?
+    {% endif %}
+
+    {% if col == "doctorate" %}
+        Does this Faculty member {% if res == "no" %}do not{% endif %} have a PhD ?
+    {% endif %}
+
+    {% if col == "department" %}
+        Does the Faculty belong to {{ res }} department ?
+    {% endif %}
+
+    {% if col == "office" %}
+        Is this faculty's office located in the {{ res }} ?
+    {% endif %}
+
+    {% if col == "year_of_study" %}
+        Does this Faculty conduct any class year {{ res }}
+    {% endif %}
+
+    {% if col == "semester" %}
+        Does the Faculty teach any course of semester {{ res }} ?
+    {% endif %}
+
+{% endblock question %}
+
+
+
+<!-- question thread -->
+{% block thread %}
+    
+
+{% endblock thread %}
