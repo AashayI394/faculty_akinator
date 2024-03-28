@@ -96,36 +96,29 @@ def game_execute():
     global col_header
     global gender_temp
     global doc_temp
-    print(result)
+    # print(result)
 
     if len(result) == 1:
-        q = "Your Faculty is\n"+ str(result[0][1])
-        return render_template("game.html", q=q)
-
+        return redirect("/gamecomplete")
+        # q = "Your Faculty is\n"+ str(result[0][1])
+        # return render_template("game.html", q=q)
 
     if request.method == 'GET':
         update_params(result)
-
         
         temp = create_query(0)
         if temp == [-1,-1]:
             return redirect("/gamecomplete")
         col = temp[0]
         res = temp[1]
-
         col_res.append((col,res))
 
-        # col = "department_name"
-        # res = "Mathematics"
-        # question_thread = []
-        
         q = create_question(col, res)
         return render_template("game.html", q=q)
     if request.method == 'POST':
         val = request.form['game_answer']
 
         update_params(result)
-
         # function call here
 
         col = col_res[-1][0]
@@ -149,14 +142,15 @@ def game_execute():
                 gender_temp = list(res)
             if col == 'doctorate':
                 doc_temp = list(res)
+            if col == 'semester':
+                if 'year_of_study' in col_header:
+                    col_header.remove('year_of_study')
             col_header.remove(col)
         
-
         col = col_res[-1][0]
         res = col_res[-1][1]
 
         print(col_res,"\n\n")
-
 
         facinator_game(col,res,val)
     return redirect("/facinator_game_mode")
@@ -170,23 +164,18 @@ def game_complete():
         if val == 'no':
             return redirect("/gamecomplete")
         
-
-    print(result)
+    # print(result)
     if len(result) > 1:
         return redirect("/facinator_game_mode")
 
     print(result)    
+
     if(result):
         q = "Your Faculty is\n"+ str(result[0][1])
     else:
         q = "I lost !"
-    return render_template("game.html", q=q)
+    return render_template("game_over.html", q=q)
     
-    
-
-
-
-
 
 
 
