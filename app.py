@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 import random,sqlite3
-from guesslogic import generate_random_number, find_intersection, create_query, delete_query, singlequery, query_all, dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp,col_header
-
+from guesslogic import generate_random_number, update_params, find_intersection, create_query, delete_query, singlequery, query_all, dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp,col_header
 
 # game logic start
 question_thread = []
@@ -22,6 +21,17 @@ def facinator_game(col, res, val):
         if val == 'no':
             tempres = list(set(result) - set(tempres))
         result = find_intersection(result, tempres)
+
+# def update_params():
+#     global result
+#     global dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp
+#     dept_temp = [t[3] for t in result]
+#     yos_temp = [t[7] for t in result]
+#     gender_temp = [t[9] for t in result]
+#     semester_temp = [t[8] for t in result]
+#     office_temp = [t[11] for t in result]
+#     doc_temp = [t[10] for t in result]
+#     subject_temp = [t[6] for t in result]
 
     
 
@@ -48,31 +58,7 @@ con.close()
 
 
 def create_question(col, res):
-    # if col == "department_name" %}
-    #     Does the Faculty belong to {{ res }} department ?
-
-    # if col == "subject_name" %}
-    #     Does this Faculty teach the course - {{ res }} ?
-    
-
-    # if col == "gender" %}
-    #     Is the Faculty {{ res }} ?
-
-    # if col == "doctorate" %}
-    #     Does this Faculty member {% if res == "no" %}do not{% endif %} have a PhD ?
-
-    # if col == "department" %}
-    #     Does the Faculty belong to {{ res }} department ?
-
-    # if col == "office" %}
-    #     Is this faculty's office located in the {{ res }} ?
-
-    # if col == "year_of_study" %}
-    #     Does this Faculty conduct any class year {{ res }}
-
-    # if col == "semester" %}
-    #     Does the Faculty teach any course of semester {{ res }} ?
-
+  
     match col:
         case "department_name":
             q = "Does the Faculty belong to " + res + " department ?"
@@ -118,6 +104,7 @@ def game_execute():
 
 
     if request.method == 'GET':
+        update_params(result)
 
         
         temp = create_query(0)
@@ -136,6 +123,11 @@ def game_execute():
         return render_template("game.html", q=q)
     if request.method == 'POST':
         val = request.form['game_answer']
+
+        update_params(result)
+
+        # function call here
+
         col = col_res[-1][0]
         res = col_res[-1][1]
 

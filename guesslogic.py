@@ -14,6 +14,8 @@ from math import ceil
 # 	return result
 
 
+
+
 col_header = ["department_name","subject_name","gender","doctorate","office","year_of_study","semester"]
 
 conn = sqlite3.connect('facinator.db')
@@ -32,7 +34,10 @@ for sub in subs:
     yos.append(sub[0])
     yos_temp = yos
 
+
+semester = [1,2,3,4,5,6,7,8]
 semester_temp = [1,2,3,4,5,6,7,8]
+
 
 cursor.execute("SELECT DISTINCT gender FROM admindb")
 subs = cursor.fetchall()
@@ -89,19 +94,16 @@ def find_intersection(list1, list2):
     intersection = list(set1 & set2)
     return intersection
 
-# def query_subjects1(years):
-#     conn = sqlite3.connect('facinator.db')
-#     cursor = conn.cursor()
-#     cursor.execute("SELECT DISTINCT subject_name FROM admindb WHERE year_of_study IN ({})".format(",".join(map(str, years))))
-#     subjects = cursor.fetchall()
-#     return [subject[0] for subject in subjects]
+def update_params(sliced_result):
+    global dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp
+    dept_temp = [t[3] for t in sliced_result]
+    yos_temp = [t[7] for t in sliced_result]
+    gender_temp = [t[9] for t in sliced_result]
+    semester_temp = [t[8] for t in sliced_result]
+    office_temp = [t[11] for t in sliced_result]
+    doc_temp = [t[10] for t in sliced_result]
+    subject_temp = [t[6] for t in sliced_result]
 
-# def query_subjects2(sem):
-#     conn = sqlite3.connect('facinator.db')
-#     cursor = conn.cursor()
-#     cursor.execute("SELECT DISTINCT subject_name FROM admindb WHERE semester IN ({})".format(",".join(map(str, sem))))
-#     subjects = cursor.fetchall()
-#     return [subject[0] for subject in subjects]
 
 def delete_query(col,res):
     
@@ -132,7 +134,7 @@ def create_query(p):
     n_temp = random.choice(col_header)
 
     n = col_header.index(n_temp)
-    if len(col_header) == 1:
+    if len(col_header) == 0:
     	return [-1,-1]
     col = col_header[n]
     res = ""
@@ -142,17 +144,9 @@ def create_query(p):
         # Your block of code here
     match col:
         case "department_name":
-            # Check if any office location has been popped
-            if len(office) != len(office_temp):
-                rem_office = set(office) - set(office_temp)
-            if rem_office:
-                placeholders = ",".join(["?"] * len(rem_office))
-                query = f"SELECT DISTINCT department_name FROM admindb WHERE office IN ({placeholders})"
-                cursor.execute(query, tuple(rem_office))
-                subs = cursor.fetchall()
-                dept_temp[:] = [sub[0] for sub in subs if sub[0] in dept_temp]
-            # i = generate_random_number(len(dept_temp) - 1)
-            # res = dept_temp[i]
+            # dept_temp[:] = [sub[0] for sub in subs if sub[0] in dept_temp]
+        # i = generate_random_number(len(dept_temp) - 1)
+        # res = dept_temp[i]
             res = random.choice(dept_temp)
         case "subject_name":
             # i = generate_random_number(len(subject_temp) - 1)
