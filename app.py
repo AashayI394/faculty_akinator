@@ -117,7 +117,7 @@ def game_execute():
         
         temp = create_query(0)
         if temp == [-1,-1]:
-            return redirect("/gamecomplete",result=result)
+            return redirect("/gamecomplete")
         col = temp[0]
         res = temp[1]
 
@@ -141,6 +141,16 @@ def game_execute():
 
         facinator_game(col,res,val)
     return redirect("/facinator_game_mode")
+
+@app.route("/gamecomplete")
+def game_complete():
+    global result
+    if(result):
+        q = "Your Faculty is\n"+ str(result[0][1])
+    else:
+        q = "I lost !"
+    return render_template("game.html", q=q)
+
 
 
 
