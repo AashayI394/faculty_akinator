@@ -134,7 +134,6 @@ def create_query(p):
     n = col_header.index(n_temp)
     if len(col_header) == 1:
     	return [-1,-1]
-
     col = col_header[n]
     res = ""
     rem_office = set()  # initialize
@@ -155,37 +154,30 @@ def create_query(p):
             # i = generate_random_number(len(dept_temp) - 1)
             # res = dept_temp[i]
             res = random.choice(dept_temp)
-            col_header.pop(n)
         case "subject_name":
             # i = generate_random_number(len(subject_temp) - 1)
             # res = subject_temp[i]
             res = random.choice(subject_temp)
-            col_header.pop(n)
         case "gender":
             # i = generate_random_number(len(gender_temp) - 1)
             # res = gender_temp[i]
             res = random.choice(gender_temp)
-            col_header.pop(n)
         case "office":
             # i = generate_random_number(len(office_temp) - 1)
             # res = office_temp[i]
             res = random.choice(office_temp)
-            col_header.pop(n)
         case "doctorate":
             # i = generate_random_number(len(doc_temp) - 1)
             # res = doc_temp[i]
             res = random.choice(doc_temp)
-            col_header.pop(n)
         case "year_of_study":
             # i = generate_random_number(len(yos_temp) - 1)
             # res = yos_temp[i]
             res = random.choice(yos_temp)
-            col_header.pop(n)
         case "semester":
             # i = generate_random_number(len(semester_temp) - 1)
             # res = semester_temp[i]
             res = random.choice(semester_temp)
-            col_header.pop(n)
 
     return [col, res]
 

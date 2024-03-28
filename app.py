@@ -81,8 +81,11 @@ def create_question(col, res):
         case "gender":
             q = "Is the Faculty "+ res +" ?"
         case "doctorate":
-            res = 'yes'
-            q = "Does this Faculty member have a PhD ?"
+            if res == 'yes':
+                q = "Does this Faculty member have a PhD ?"
+            if res == 'no':
+                q = "The Faculty does not hold a PhD ?"
+
         case "office":
             q = "Is this faculty's office located in the " + res +" ?"
         case "year_of_study":
@@ -104,7 +107,9 @@ def game_execute():
     global question_thread
     global col_res
     global result
-
+    global col_header
+    global gender_temp
+    global doc_temp
     print(result)
 
     if len(result) == 1:
@@ -131,14 +136,28 @@ def game_execute():
         return render_template("game.html", q=q)
     if request.method == 'POST':
         val = request.form['game_answer']
+        col = col_res[-1][0]
+        res = col_res[-1][1]
 
         print("\n\n"+ val)
         # question_thread[-1][1] = val
-
+        print(col_header)
         if val == 'no':
-            col = col_res[-1][0]
-            res = col_res[-1][1]
+            if col =='gender':
+                col_header.remove(col)
+                gender_temp2 = list(set(gender_temp) - set(res))
+                gender_temp = gender_temp2
+            if col=='doctorate':
+                col_header.remove(col)
+                doc_temp2 = list(set(doc_temp) - set(res))
+                doc_temp = doc_temp2
             delete_query(col,res)
+        if val == 'yes':
+            if col == 'gender':
+                gender_temp = list(res)
+            if col == 'doctorate':
+                doc_temp = list(res)
+            col_header.remove(col)
         
 
         col = col_res[-1][0]
