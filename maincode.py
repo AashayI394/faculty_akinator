@@ -15,9 +15,7 @@ def facinator_game(col,res,val):
 	if len(result)>1:
 		gametuple.append((col,res,val))
 		tempres = singlequery(col,res)
-		if val:
-			result = find_intersection(result, tempres)
-		else:
+		if not val:
 			tempres = list(set(result) - set(tempres))
-			result = find_intersection(result, tempres)
+		result = find_intersection(result, tempres)
 

@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 import random,sqlite3
-from guesslogic import generate_random_number, find_intersection, create_query, singlequery, query_all, dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp
+from guesslogic import generate_random_number, find_intersection, create_query, delete_query, singlequery, query_all, dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp,col_header
 
 
 # game logic start
@@ -13,17 +13,16 @@ gametuple=[]
 
 col_res = []
 
-def facinator_game(col,res,val):
-	global result
-	global gametuple
-	if len(result)>1:
-		gametuple.append((col,res,val))
-		tempres = singlequery(col,res)
-		if val:
-			result = find_intersection(result, tempres)
-		else:
-			tempres = list(set(result) - set(tempres))
-			result = find_intersection(result, tempres)
+def facinator_game(col, res, val):
+    global result
+    global gametuple
+    if len(result) > 1:
+        gametuple.append((col, res, val))
+        tempres = singlequery(col, res)
+        if val == 'no':
+            tempres = list(set(result) - set(tempres))
+        result = find_intersection(result, tempres)
+
     
 
 # game logic end    
@@ -82,10 +81,8 @@ def create_question(col, res):
         case "gender":
             q = "Is the Faculty "+ res +" ?"
         case "doctorate":
-            if res == "yes":
-                q = "Does this Faculty member have a PhD ?"
-            else:
-                q = "Is this Faculty no a PhD holder ?"
+            res = 'yes'
+            q = "Does this Faculty member have a PhD ?"
         case "office":
             q = "Is this faculty's office located in the " + res +" ?"
         case "year_of_study":
@@ -108,8 +105,11 @@ def game_execute():
     global col_res
     global result
 
+    print(result)
+
     if len(result) == 1:
-        return render_template("/*")
+        q = "Your Faculty is\n"+ str(result[0][1])
+        return render_template("game.html", q=q)
 
 
     if request.method == 'GET':
@@ -132,24 +132,49 @@ def game_execute():
     if request.method == 'POST':
         val = request.form['game_answer']
 
-        print("\n\n"+ val +"\n\n")
+        print("\n\n"+ val)
         # question_thread[-1][1] = val
 
-        col = col_res[0][0]
-        res = col_res[0][1]
+        if val == 'no':
+            col = col_res[-1][0]
+            res = col_res[-1][1]
+            delete_query(col,res)
+        
+
+        col = col_res[-1][0]
+        res = col_res[-1][1]
+
+        print(col_res,"\n\n")
 
 
         facinator_game(col,res,val)
     return redirect("/facinator_game_mode")
 
-@app.route("/gamecomplete")
+@app.route("/gamecomplete", methods=['GET', 'POST'])
 def game_complete():
     global result
+
+    if request.method == 'POST':
+        val = request.form['game_answer']
+        if val == 'no':
+            return redirect("/gamecomplete")
+        
+
+    print(result)
+    if len(result) > 1:
+        return redirect("/facinator_game_mode")
+
+    print(result)    
     if(result):
         q = "Your Faculty is\n"+ str(result[0][1])
     else:
         q = "I lost !"
     return render_template("game.html", q=q)
+    
+    
+
+
+
 
 
 
@@ -168,7 +193,7 @@ def login():
         else:
             return redirect("/admin")
     return render_template("login.html", error=error)
-
+    
 
 @app.route("/register")
 def register():

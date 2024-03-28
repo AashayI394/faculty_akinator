@@ -103,10 +103,36 @@ def find_intersection(list1, list2):
 #     subjects = cursor.fetchall()
 #     return [subject[0] for subject in subjects]
 
-def create_query(iteration):
-    n = generate_random_number(len(col_header) - 1)
-    if n==0:
-    	col_header.pop(0)
+def delete_query(col,res):
+    
+    match col:
+        case "department_name":
+            global dept_temp
+            dept_temp.remove(res)
+        case "subject_name":
+            global subject_temp
+            subject_temp.remove(res)
+        case "office":
+            global office_temp
+            office_temp.remove(res)
+        case "year_of_study":
+            global yos_temp
+            yos_temp.remove(res)
+        case "doctorate":
+            global doc_temp
+            doc_temp.remove(res)
+        case "semester":
+            global semester_temp
+            semester_temp.remove(res)
+        case "gender":
+            global gender_temp
+            gender_temp.remove(res)
+      
+def create_query(p):
+    n_temp = random.choice(col_header)
+
+    n = col_header.index(n_temp)
+    if len(col_header) == 1:
     	return [-1,-1]
 
     col = col_header[n]
@@ -126,33 +152,41 @@ def create_query(iteration):
                 cursor.execute(query, tuple(rem_office))
                 subs = cursor.fetchall()
                 dept_temp[:] = [sub[0] for sub in subs if sub[0] in dept_temp]
-            i = generate_random_number(len(dept_temp) - 1)
-            res = dept_temp[i]
+            # i = generate_random_number(len(dept_temp) - 1)
+            # res = dept_temp[i]
+            res = random.choice(dept_temp)
             col_header.pop(n)
         case "subject_name":
-            i = generate_random_number(len(subject_temp) - 1)
-            res = subject_temp[i]
+            # i = generate_random_number(len(subject_temp) - 1)
+            # res = subject_temp[i]
+            res = random.choice(subject_temp)
             col_header.pop(n)
         case "gender":
-            i = generate_random_number(len(gender_temp) - 1)
-            res = gender_temp[i]
+            # i = generate_random_number(len(gender_temp) - 1)
+            # res = gender_temp[i]
+            res = random.choice(gender_temp)
             col_header.pop(n)
         case "office":
-            i = generate_random_number(len(office_temp) - 1)
-            res = office_temp[i]
+            # i = generate_random_number(len(office_temp) - 1)
+            # res = office_temp[i]
+            res = random.choice(office_temp)
             col_header.pop(n)
         case "doctorate":
-            i = generate_random_number(len(doc_temp) - 1)
-            res = doc_temp[i]
+            # i = generate_random_number(len(doc_temp) - 1)
+            # res = doc_temp[i]
+            res = random.choice(doc_temp)
             col_header.pop(n)
         case "year_of_study":
-            i = generate_random_number(len(yos_temp) - 1)
-            res = yos_temp[i]
+            # i = generate_random_number(len(yos_temp) - 1)
+            # res = yos_temp[i]
+            res = random.choice(yos_temp)
             col_header.pop(n)
         case "semester":
-            i = generate_random_number(len(semester_temp) - 1)
-            res = semester_temp[i]
+            # i = generate_random_number(len(semester_temp) - 1)
+            # res = semester_temp[i]
+            res = random.choice(semester_temp)
             col_header.pop(n)
 
     return [col, res]
+
 
