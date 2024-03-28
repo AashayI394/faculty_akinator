@@ -256,7 +256,16 @@
             <div class="game-body">
                 <div class="game-question">
                     <p class="game-stmt">
+                        <!-- {% if question_thread|length == 0 %}
+                        nothing
+                        {% endif %}
+
+                        {% if question_thread|length > 0 %}
                         {{ question_thread[-1][0] }}
+                        {% endif %} -->
+                        {{ q }}
+
+                        
                     </p>
                 </div>
                 <div class="game-option">
@@ -285,12 +294,12 @@
 
             <ol>
 
-                {% for i in question_thread %}
+                <!-- {% for i in question_thread %}
                 <li>
                     <p class="thread-question">{{ i[0] }}</p>
                     <p class="thread-answer">{{ i[1] }}</p>
                 </li>
-                {% endfor %}
+                {% endfor %} -->
 <!-- 
                 <li>
                     <p class="thread-question">First question?</p>

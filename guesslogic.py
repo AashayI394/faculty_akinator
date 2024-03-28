@@ -14,6 +14,8 @@ from math import ceil
 # 	return result
 
 
+
+
 col_header = ["department_name","subject_name","gender","doctorate","office","year_of_study","semester"]
 
 conn = sqlite3.connect('facinator.db')
@@ -32,7 +34,10 @@ for sub in subs:
     yos.append(sub[0])
     yos_temp = yos
 
+
+semester = [1,2,3,4,5,6,7,8]
 semester_temp = [1,2,3,4,5,6,7,8]
+
 
 cursor.execute("SELECT DISTINCT gender FROM admindb")
 subs = cursor.fetchall()
@@ -80,8 +85,7 @@ def singlequery(column, res):
     return result
 
 def generate_random_number(length):
-    if length < 1:
-        raise ValueError("Length must be at least 1")
+    
     return random.randint(0, length - 1)
 
 def find_intersection(list1, list2):
@@ -90,18 +94,48 @@ def find_intersection(list1, list2):
     intersection = list(set1 & set2)
     return intersection
 
-def query_subjects1(years):
-    cursor.execute("SELECT DISTINCT subject_name FROM admindb WHERE year_of_study IN ({})".format(",".join(map(str, years))))
-    subjects = cursor.fetchall()
-    return [subject[0] for subject in subjects]
+def update_params(sliced_result):
+    global dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp
+    dept_temp = [t[3] for t in sliced_result]
+    yos_temp = [t[7] for t in sliced_result]
+    gender_temp = [t[9] for t in sliced_result]
+    semester_temp = [t[8] for t in sliced_result]
+    office_temp = [t[11] for t in sliced_result]
+    doc_temp = [t[10] for t in sliced_result]
+    subject_temp = [t[6] for t in sliced_result]
 
-def query_subjects2(sem):
-    cursor.execute("SELECT DISTINCT subject_name FROM admindb WHERE semester IN ({})".format(",".join(map(str, sem))))
-    subjects = cursor.fetchall()
-    return [subject[0] for subject in subjects]
 
-def create_query(iteration):
-    n = generate_random_number(len(col_header) - 1)
+def delete_query(col,res):
+    
+    match col:
+        case "department_name":
+            global dept_temp
+            dept_temp.remove(res)
+        case "subject_name":
+            global subject_temp
+            subject_temp.remove(res)
+        case "office":
+            global office_temp
+            office_temp.remove(res)
+        case "year_of_study":
+            global yos_temp
+            yos_temp.remove(res)
+        case "doctorate":
+            global doc_temp
+            doc_temp.remove(res)
+        case "semester":
+            global semester_temp
+            semester_temp.remove(res)
+        case "gender":
+            global gender_temp
+            gender_temp.remove(res)
+      
+def create_query(p):
+    n_temp = random.choice(col_header)
+
+    n = col_header.index(n_temp)
+    if len(col_header) == 0:
+    	return [-1,-1]
     col = col_header[n]
     res = ""
     rem_office = set()  # initialize
@@ -110,46 +144,35 @@ def create_query(iteration):
         # Your block of code here
     match col:
         case "department_name":
-            # Check if any office location has been popped
-            if len(office) != len(office_temp):
-                rem_office = set(office) - set(office_temp)
-            if rem_office:
-                placeholders = ",".join(["?"] * len(rem_office))
-                query = f"SELECT DISTINCT department_name FROM admindb WHERE office IN ({placeholders})"
-                cursor.execute(query, tuple(rem_office))
-                subs = cursor.fetchall()
-                dept_temp[:] = [sub[0] for sub in subs if sub[0] in dept_temp]
-            i = generate_random_number(len(dept_temp) - 1)
-            res = dept_temp[i]
-            col_header.pop(n)
+            # dept_temp[:] = [sub[0] for sub in subs if sub[0] in dept_temp]
+        # i = generate_random_number(len(dept_temp) - 1)
+        # res = dept_temp[i]
+            res = random.choice(dept_temp)
         case "subject_name":
-            years = yos_temp
-            subject_temp[:] = query_subjects1(years)
-            sem = semester_temp
-            subject_temp[:] = query_subjects2(sem)
-            i = generate_random_number(len(subject_temp) - 1)
-            res = subject_temp[i]
-            col_header.pop(n)
+            # i = generate_random_number(len(subject_temp) - 1)
+            # res = subject_temp[i]
+            res = random.choice(subject_temp)
         case "gender":
-            i = generate_random_number(len(gender_temp) - 1)
-            res = gender_temp[i]
-            col_header.pop(n)
+            # i = generate_random_number(len(gender_temp) - 1)
+            # res = gender_temp[i]
+            res = random.choice(gender_temp)
         case "office":
-            i = generate_random_number(len(office_temp) - 1)
-            res = office_temp[i]
-            col_header.pop(n)
+            # i = generate_random_number(len(office_temp) - 1)
+            # res = office_temp[i]
+            res = random.choice(office_temp)
         case "doctorate":
-            i = generate_random_number(len(doc_temp) - 1)
-            res = doc_temp[i]
-            col_header.pop(n)
+            # i = generate_random_number(len(doc_temp) - 1)
+            # res = doc_temp[i]
+            res = random.choice(doc_temp)
         case "year_of_study":
-            i = generate_random_number(len(yos_temp) - 1)
-            res = yos_temp[i]
-            col_header.pop(n)
+            # i = generate_random_number(len(yos_temp) - 1)
+            # res = yos_temp[i]
+            res = random.choice(yos_temp)
         case "semester":
-            i = generate_random_number(len(semester_temp) - 1)
-            res = semester_temp[i]
-            col_header.pop(n)
+            # i = generate_random_number(len(semester_temp) - 1)
+            # res = semester_temp[i]
+            res = random.choice(semester_temp)
 
     return [col, res]
+
 
