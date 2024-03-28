@@ -116,6 +116,8 @@ def game_execute():
 
         
         temp = create_query(0)
+        if temp == [-1,-1]:
+            return redirect("/gamecomplete",result=result)
         col = temp[0]
         res = temp[1]
 

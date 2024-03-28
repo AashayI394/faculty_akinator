@@ -80,8 +80,7 @@ def singlequery(column, res):
     return result
 
 def generate_random_number(length):
-    if length < 1:
-        raise ValueError("Length must be at least 1")
+    
     return random.randint(0, length - 1)
 
 def find_intersection(list1, list2):
@@ -90,18 +89,26 @@ def find_intersection(list1, list2):
     intersection = list(set1 & set2)
     return intersection
 
-def query_subjects1(years):
-    cursor.execute("SELECT DISTINCT subject_name FROM admindb WHERE year_of_study IN ({})".format(",".join(map(str, years))))
-    subjects = cursor.fetchall()
-    return [subject[0] for subject in subjects]
+# def query_subjects1(years):
+#     conn = sqlite3.connect('facinator.db')
+#     cursor = conn.cursor()
+#     cursor.execute("SELECT DISTINCT subject_name FROM admindb WHERE year_of_study IN ({})".format(",".join(map(str, years))))
+#     subjects = cursor.fetchall()
+#     return [subject[0] for subject in subjects]
 
-def query_subjects2(sem):
-    cursor.execute("SELECT DISTINCT subject_name FROM admindb WHERE semester IN ({})".format(",".join(map(str, sem))))
-    subjects = cursor.fetchall()
-    return [subject[0] for subject in subjects]
+# def query_subjects2(sem):
+#     conn = sqlite3.connect('facinator.db')
+#     cursor = conn.cursor()
+#     cursor.execute("SELECT DISTINCT subject_name FROM admindb WHERE semester IN ({})".format(",".join(map(str, sem))))
+#     subjects = cursor.fetchall()
+#     return [subject[0] for subject in subjects]
 
 def create_query(iteration):
     n = generate_random_number(len(col_header) - 1)
+    if n==0:
+    	col_header.pop(0)
+    	return [-1,-1]
+
     col = col_header[n]
     res = ""
     rem_office = set()  # initialize
@@ -123,10 +130,6 @@ def create_query(iteration):
             res = dept_temp[i]
             col_header.pop(n)
         case "subject_name":
-            years = yos_temp
-            subject_temp[:] = query_subjects1(years)
-            sem = semester_temp
-            subject_temp[:] = query_subjects2(sem)
             i = generate_random_number(len(subject_temp) - 1)
             res = subject_temp[i]
             col_header.pop(n)
