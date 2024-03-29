@@ -1,0 +1,50 @@
+{% extends 'gamelayout.html' %}
+
+{% block js %}
+    <script>
+        function displayRandomGenie(){
+            var images = [
+                "../static/akinator_images/aki1.webp",
+                "../static/akinator_images/aki2.webp",
+                "../static/akinator_images/aki3.webp",
+                "../static/akinator_images/aki4.webp",
+                "../static/akinator_images/aki5.webp",
+                "../static/akinator_images/aki6.webp"
+            ];
+
+            //get a random index from images array
+            var randomIndex = Math.floor(Math.random() * images.length);
+
+            //get images by id and set its source
+            document.getElementById("game-genie-pic").style.backgroundImage = "url('" + images[randomIndex] + "')";
+        }
+
+        window.onload = displayRandomGenie;
+    </script>
+{% endblock js %}
+
+
+
+{% block q_stmt %}
+
+{{q}}
+
+
+{% endblock q_stmt %}
+
+
+
+
+{% block gameoptions %}
+
+<form action="{{ url_for('gameover') }}" method="post" class="game-option-element">
+    <input type="text" name="game_answer" value="yes" hidden><input type="submit" class="btn btn-primary game-option-element" value="YES">
+</form>
+
+<form action="{{ url_for('gameover') }}" method="post" class="game-option-element">
+    <input type="text" name="game_answer" value="no" hidden><input type="submit" class="btn btn-primary game-option-element" value="NO">
+</form>
+
+{% endblock gameoptions %}
+
+
