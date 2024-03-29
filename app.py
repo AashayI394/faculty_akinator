@@ -401,19 +401,16 @@ def search():
 
     return jsonify(res)
 
-@app.route("/addnew")
+@app.route("/addnew", methods=['GET', 'POST'])
 def addnew():
-    return render_template("addnew.html")
-
-@app.route("/addnewcourse", methods=['GET', 'POST'])
-def addnewcourse():
-
+    if request.method == 'GET':
+        flash = None
+        return render_template("addnew.html")
 
     if request.method == 'POST':
 
         data = request.form
         # print(data)
-
         name = data.get('addnewname')
         email = data.get('addnewemail')
         gender = data.get('addnewgender')
@@ -424,7 +421,7 @@ def addnewcourse():
         status = data.get('phdstatus')
         office = data.get('addnewofficelocation')
 
-        print(data)
+        # print(data)
 
         connection = sqlite3.connect('pending.db')
 
@@ -436,90 +433,154 @@ def addnewcourse():
 
         connection.commit()
         connection.close()
-    return redirect("/")
+        return render_template("addnew.html")
 
-
-@app.route("/pending")
+@app.route("/pending", methods=['GET', 'POST'])
 def pending():
-    con = sqlite3.connect("pending.db")
-
-    cur = con.cursor()
-    cur.execute("SELECT * FROM PENDING")
-
-    new_data = cur.fetchall(); 
-    con.close()
-    return render_template("pending.html",data = list(reversed(new_data)))
-
-@app.route("/editdata", methods=['GET', 'POST'])
-def editdata():
-    if request.method == 'POST':    
-        id = request.form.get('edit')
-
+    if request.method == 'GET':
         con = sqlite3.connect("pending.db")
+
         cur = con.cursor()
-        cur.execute("SELECT * FROM pending WHERE id = ?", (id,))
+        cur.execute("SELECT * FROM PENDING")
+
         new_data = cur.fetchall(); 
-        cur.execute("DELETE FROM pending WHERE id = ?", (id,))
-        con.commit()
-        con.close() 
-
-        print(new_data)
-        name = new_data[0][1]
-        email = new_data[0][2]
-        gender = new_data[0][3]
-        department = new_data[0][4]
-        phdstatus =new_data[0][5]
-        office = new_data[0][6]
-        course = new_data[0][7]
-        yos = new_data[0][8]
-        semester = new_data[0][9]
-
-        return render_template("editdata.html", Dname=name, Demail=email, Dgender=gender, Ddepartment=department, Dphdstatus=phdstatus, Doffice=office, Dcourse=course, Dyos=yos, Dsemester=semester)
-
-@app.route("/savedata", methods=['GET', 'POST'])
-def savedata():
-    if request.method == 'POST':    
-        id = request.form.get('save')
-        
-        ## fetching data from pending
-        con = sqlite3.connect("pending.db")
-        cur = con.cursor()
-        cur.execute("SELECT * FROM pending WHERE id = ?", (id,))
-        fetched_data = cur.fetchall(); 
-        print(fetched_data)
-        new_data = fetched_data[0]
-        
-        print(new_data)
-
-        cur.execute("DELETE FROM pending WHERE id = ?", (id,))
-        con.commit()
         con.close()
+        return render_template("pending.html",data = list(reversed(new_data)))
 
-        ## inserting data into main database
-        con = sqlite3.connect("facinator.db")
-        cur = con.cursor()
 
-        cur.execute("INSERT INTO admindb(faculty_name, faculty_email, department_name, subject_name, year_of_study, semester, gender, doctorate, office) VALUES(?,?,?,?,?,?,?,?,?)",
-                    (new_data[1], new_data[2], new_data[4], new_data[7], new_data[8], new_data[9], new_data[3], new_data[5], new_data[6])
-                    )
-        
-        con.commit()
-        con.close()
+    if request.method == 'POST':  
+        action =  request.form.get('action')
+        id = request.form.get('entry')
+
+        if action == 'EDIT':
+
+            con = sqlite3.connect("pending.db")
+            cur = con.cursor()
+            cur.execute("SELECT * FROM pending WHERE id = ?", (id,))
+            new_data = cur.fetchall(); 
+            # cur.execute("DELETE FROM pending WHERE id = ?", (id,))
+            # con.commit()
+            con.close() 
+
+            print(new_data)
+            name = new_data[0][1]
+            email = new_data[0][2]
+            gender = new_data[0][3]
+            department = new_data[0][4]
+            phdstatus =new_data[0][5]
+            office = new_data[0][6]
+            course = new_data[0][7]
+            yos = new_data[0][8]
+            semester = new_data[0][9]
+            return render_template("editdata.html", Dname=name, Demail=email, Dgender=gender, Ddepartment=department, Dphdstatus=phdstatus, Doffice=office, Dcourse=course, Dyos=yos, Dsemester=semester)
+
+# @app.route("/editdata", methods=['GET', 'POST'])
+# def editdata():
+        # id = request.form.get('edit')
+        # con = sqlite3.connect("pending.db")
+        # cur = con.cursor()
+        # cur.execute("SELECT * FROM pending WHERE id = ?", (id,))
+        # new_data = cur.fetchall(); 
+        # cur.execute("DELETE FROM pending WHERE id = ?", (id,))
+        # con.commit()
+        # con.close() 
+
         # print(new_data)
-        return redirect("/pending")
+        # name = new_data[0][1]
+        # email = new_data[0][2]
+        # gender = new_data[0][3]
+        # department = new_data[0][4]
+        # phdstatus =new_data[0][5]
+        # office = new_data[0][6]
+        # course = new_data[0][7]
+        # yos = new_data[0][8]
+        # semester = new_data[0][9]
 
-@app.route("/deletedata", methods=['GET', 'POST'])
-def deletedata():
+        # return render_template("editdata.html", Dname=name, Demail=email, Dgender=gender, Ddepartment=department, Dphdstatus=phdstatus, Doffice=office, Dcourse=course, Dyos=yos, Dsemester=semester)
+        if action == 'SAVE':
+        
+            ## fetching data from pending
+            con = sqlite3.connect("pending.db")
+            cur = con.cursor()
+            cur.execute("SELECT * FROM pending WHERE id = ?", (id,))
+            fetched_data = cur.fetchall(); 
+            print(fetched_data)
+            new_data = fetched_data[0]
+            
+            print(new_data)
+
+            cur.execute("DELETE FROM pending WHERE id = ?", (id,))
+            con.commit()
+            con.close()
+
+            ## inserting data into main database
+            con = sqlite3.connect("facinator.db")
+            cur = con.cursor()
+
+            cur.execute("INSERT INTO admindb(faculty_name, faculty_email, department_name, subject_name, year_of_study, semester, gender, doctorate, office) VALUES(?,?,?,?,?,?,?,?,?)",
+                        (new_data[1], new_data[2], new_data[4], new_data[7], new_data[8], new_data[9], new_data[3], new_data[5], new_data[6])
+                        )
+            
+            con.commit()
+            con.close()
+            # print(new_data)
+            return redirect("/pending")
+        
+        if action == 'DELETE':
+            con = sqlite3.connect("pending.db")
+            cur = con.cursor()
+            cur.execute("DELETE FROM pending WHERE id = ?", (id,))
+            con.commit()
+            con.close()
+
+            return redirect("/pending")
+
+
+
+# @app.route("/savedata", methods=['GET', 'POST'])
+# def savedata():
+#     if request.method == 'POST':    
+#         id = request.form.get('save')
+        
+#         ## fetching data from pending
+#         con = sqlite3.connect("pending.db")
+#         cur = con.cursor()
+#         cur.execute("SELECT * FROM pending WHERE id = ?", (id,))
+#         fetched_data = cur.fetchall(); 
+#         print(fetched_data)
+#         new_data = fetched_data[0]
+        
+#         print(new_data)
+
+#         cur.execute("DELETE FROM pending WHERE id = ?", (id,))
+#         con.commit()
+#         con.close()
+
+#         ## inserting data into main database
+#         con = sqlite3.connect("facinator.db")
+#         cur = con.cursor()
+
+#         cur.execute("INSERT INTO admindb(faculty_name, faculty_email, department_name, subject_name, year_of_study, semester, gender, doctorate, office) VALUES(?,?,?,?,?,?,?,?,?)",
+#                     (new_data[1], new_data[2], new_data[4], new_data[7], new_data[8], new_data[9], new_data[3], new_data[5], new_data[6])
+#                     )
+        
+#         con.commit()
+#         con.close()
+#         # print(new_data)
+#         return redirect("/pending")
+
+# @app.route("/deletedata", methods=['GET', 'POST'])
+# def deletedata():
    
-    id = request.form.get('delete')
+#     id = request.form.get('delete')
 
-    con = sqlite3.connect("pending.db")
-    cur = con.cursor()
-    cur.execute("DELETE FROM pending WHERE id = ?", (id,))
-    con.commit()
-    con.close()
+#     con = sqlite3.connect("pending.db")
+#     cur = con.cursor()
+#     cur.execute("DELETE FROM pending WHERE id = ?", (id,))
+#     con.commit()
+#     con.close()
 
-    return redirect("/pending")
+#     return redirect("/pending")
 
 
 
@@ -545,7 +606,7 @@ def alldata():
     data = cur.fetchall(); 
     con.close()
 
-    return render_template("alldata.html", data =  list(reversed(data)))
+    return render_template("alldata.html", data =  list(reversed(data)), deleted=0, login=1)
 
 
 @app.route("/admindelete", methods=['GET', 'POST'])
@@ -558,8 +619,11 @@ def admin_delete():
         cur = con.cursor()
         cur.execute("DELETE FROM admindb WHERE id = ?", (id,))
         con.commit()
+
+        cur.execute("SELECT * FROM admindb")
+        data = cur.fetchall()
         con.close()
 
-    return redirect("/admin")
+    return render_template("alldata.html", data=list(reversed(data)), deleted=1, login=0)
 
 ### admin function end

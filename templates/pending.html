@@ -7,6 +7,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         body{
@@ -14,6 +15,29 @@
             padding-right: 30px;
         }
     </style>
+
+    <script>
+
+    function savedata(){
+            const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+            });
+            Toast.fire({
+            icon: "success",
+            title: "Data Saved"
+            });
+        }
+
+
+    </script>
 
 
 </head>
@@ -91,12 +115,19 @@
         <td>{{ i[7] }}</td>
         <td>{{ i[8] }}</td>
         <td>{{ i[9] }}</td>
-        <td><form action="{{ url_for('editdata') }}"   method="post"><input type="text" value="{{ i[0] }}" name="edit" hidden><input type="submit" hidden><button class="btn btn-primary" >EDIT</button></form></td>
-        <td><form action="{{ url_for('savedata') }}"   method="post"><input type="text" value="{{ i[0] }}" name="save" hidden><input type="submit" hidden><button class="btn btn-success" >SAVE</button></form></td>
-        <td><form action="{{ url_for('deletedata') }}" method="post"><input type="text" value="{{ i[0] }}" name="delete" hidden><input type="submit"hidden><button class="btn btn-danger">DELETE</button></form></td>
-    </tr>
+        <form action="{{ url_for('pending') }}" method="post">
+          <input type="text" name="entry" value="{{ i[0] }}" hidden>
+          <td><input type="submit" name="action" value="SAVE"  class="btn btn-success"></td>
+          <td><input type="submit" name="action" value="EDIT"  class="btn btn-primary"></td>
+          <td><input type="submit" name="action" value="DELETE"  class="btn btn-danger"></td>
+        </form>
+        
+         </tr>
     {% endfor %}
 
     </table> 
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
