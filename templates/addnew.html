@@ -96,7 +96,7 @@
           <div class="navbar-nav">
             <a class="nav-item nav-link active" href="/facinator_game">Game-Mode</a>
             <a class="nav-item nav-link" href="/pending">Pending-Requests</a>
-            <a class="nav-item nav-link" href="https://en.akinator.com/theme-selection">Akinator</a>
+            <a class="nav-item nav-link" href="https://en.akinator.com/#">Akinator</a>
             <a class="nav-item nav-link" href="/addnew">Help-US-Improve</a>
             <a class="nav-item nav-link" href="/login">Admin</a>
           </div>
@@ -138,27 +138,21 @@
 
 
 
-
-
-
-
-
-    <form action="/addnew" method="POST" class="addnewform">
+    <form action="/editnew" method="POST" class="addnewform">
     <!-- name -->
     <label for="addnewname">Faculty Name</label>
-    <input type="text" id="addnewname" name="addnewname" class="addnewelement" placeholder="Name">
-    <br>
-    
+    <input required="" type="text" id="addnewname" name="addnewname" class="addnewelement" placeholder="Name">
+    <br> 
 
     <!-- email -->
     <label for="addnewemail">Faculty Outlook Email</label>
-    <input type="text" name="addnewemail" id="addnewemail" class="addnewelement" placeholder="Organisation email">
+    <input required="" type="text" name="addnewemail" id="addnewemail" class="addnewelement" placeholder="Organisation email">
     <br>
     <br>
 
     <!-- gender -->
     <label for="addnewgender">Faculty Gender</label>
-    <select class="form-select addnewelement" aria-label="Default select example" name="addnewgender" id="addnewgender">
+    <select class="form-select addnewelement" aria-label="Default select example" name="addnewgender" id="addnewgender" required="">
     <option selected disabled>Faculty Gender</option>
     <option value="male">Male</option>
     <option value="female">Female</option>
@@ -168,7 +162,7 @@
 
     <!-- department -->
     <label for="addnewdepartment">Faculty Department</label>
-    <select class="form-select addnewelement" aria-label="Default select example" name="addnewdepartment" id="addnewdepartment">
+    <select class="form-select addnewelement" aria-label="Default select example" name="addnewdepartment" id="addnewdepartment" required="">
         <option selected disabled>Department</option>
         <option value="Applied Science">Applied Science</option>
         <option value="Civil Engineering">Civil Engineering</option>  
@@ -184,7 +178,7 @@
 
     <!-- office location -->
     <label for="addnewofficelocation">Office Location</label>
-    <select class="form-select addnewelement" aria-label="Default select example" name="addnewofficelocation" id="addnewofficelocation">
+    <select class="form-select addnewelement" aria-label="Default select example" name="addnewofficelocation" id="addnewofficelocation" required="">
         <option value="Department" selected>Department</option>
         <option value="Academic Complex">Academic Complex</option>
         <option value="ENTC Extension">ENTC Extension</option>  
@@ -195,11 +189,11 @@
 
     <!-- course -->
     <label for="addnewcourse">Course</label>
-    <input type="text" name="addnewcourse" id="addnewcourse" class="addnewelement" placeholder="Course Name">
+    <input required = "" type="text" name="addnewcourse" id="addnewcourse" class="addnewelement" placeholder="Course Name">
 
     <!-- course Year -->
 
-    <select class="form-select addnewelement" aria-label="Default select example" name="addnewcourseyear" id="addnewcourseyear">
+    <select class="form-select addnewelement" aria-label="Default select example" name="addnewcourseyear" id="addnewcourseyear" required>
     <option selected disabled>Course Year</option>
     <option value="1">First Year</option>
     <option value="2">Second Year</option>
@@ -210,7 +204,7 @@
 
     <!-- course semester -->
 
-    <select class="form-select addnewelement" aria-label="Default select example" name="addnewcoursesemester" id="addnewcoursesemester">
+    <select class="form-select addnewelement" aria-label="Default select example" name="addnewcoursesemester" id="addnewcoursesemester" required>
     <option selected disabled>Course Semester</option>
     <option value="1">Sem I</option>
     <option value="2">Sem II</option>
@@ -227,18 +221,20 @@
     <br>
     <label for="addnewphd">Is the Faculty a doctorate degree holder?</label>
     <div class="form-check">
-        <input class="form-check-input" type="radio" name="phdstatus" id="phdstatusyes" value="yes">
+        <input class="form-check-input" type="radio" name="phdstatus" id="phdstatusyes" value="yes" required="">
         <label class="form-check-label" for="phdstatusyes">
             Yes
         </label>
         </div>
         <div class="form-check">
-        <input class="form-check-input" type="radio" name="phdstatus" id="phdstatusno" value="no">
+        <input class="form-check-input" type="radio" name="phdstatus" id="phdstatusno" value="no" required="">
         <label class="form-check-label" for="phdstatusno">
             No
         </label>
     </div>
-
+    {% if error %}
+        <h5>{{ error }}</h5>
+    {% endif %}   
     <!-- submit / post -->
     <br><br>
     <input type="submit" name="addnew" id="addnew" class="btn btn-primary addnewelement" value="Submit" onclick="showAlert()">

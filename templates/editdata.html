@@ -68,23 +68,23 @@
 <body>
 
 
-    <form action="{{ url_for('addnew') }}" method="POST" class="addnewform">
+    <form action="{{ url_for('editnew') }}" method="POST" class="addnewform">
 
     <!-- name -->
     <label for="addnewname">Faculty Name</label>
-    <input type="text" id="addnewname" name="addnewname" class="addnewelement" placeholder="Name" value="{{ Dname }}">
+    <input type="text" id="addnewname" name="addnewname" class="addnewelement" placeholder="Name" value="{{ Dname }} " required="">
     <br>
     
 
     <!-- email -->
     <label for="addnewemail">Faculty Outlook Email</label>
-    <input type="text" name="addnewemail" id="addnewemail" class="addnewelement" placeholder="Organisation email" value="{{ Demail }}">
+    <input type="text" name="addnewemail" id="addnewemail" class="addnewelement" placeholder="Organisation email" value="{{ Demail }}" required="">
     <br>
     <br>
 
     <!-- gender -->
     <label for="addnewgender">Faculty Gender</label>
-    <select class="form-select addnewelement" aria-label="Default select example" name="addnewgender" id="addnewgender">
+    <select class="form-select addnewelement" aria-label="Default select example" name="addnewgender" id="addnewgender" required="">
     <option disabled>Faculty Gender</option>
     <option value="male" {% if Dgender == 'male' %}selected{% endif %}>Male</option>
     <option value="female" {% if Dgender == "female" %}selected{% endif %}>Female</option>
@@ -94,7 +94,7 @@
 
     <!-- department -->
     <label for="addnewdepartment">Faculty Department</label>
-    <select class="form-select addnewelement" aria-label="Default select example" name="addnewdepartment" id="addnewdepartment">
+    <select class="form-select addnewelement" aria-label="Default select example" name="addnewdepartment" id="addnewdepartment" required="">
         <option disabled selected value="{{ Ddepartment }}">{{ Ddepartment }}</option>
         <option value="Applied Science">Applied Science</option>
         <option value="Civil Engineering">Civil Engineering</option>  

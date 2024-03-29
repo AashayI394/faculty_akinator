@@ -398,24 +398,63 @@ def addnew():
         flash = None
         return render_template("addnew.html", newsession=1)
 
+    # if request.method == 'POST':
+
+    #     data = request.form
+    #     # print(data)
+    #     name = data.get('addnewname')
+    #     email = data.get('addnewemail')
+    #     gender = data.get('addnewgender')
+    #     department = data.get('addnewdepartment')
+    #     course = data.get('addnewcourse')
+    #     courseyear = data.get('addnewcourseyear')
+    #     coursesemester = data.get('addnewcoursesemester')
+    #     status = data.get('phdstatus')
+    #     office = data.get('addnewofficelocation')
+
+    #     print(department)
+
+    #     connection = sqlite3.connect('pending.db')
+
+    #     cur = connection.cursor()
+
+    #     cur.execute("INSERT INTO pending (name, email, gender, department, doctorate, office, course, year_of_study, semester) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    #                 (name, email, gender, department, status, office, course, courseyear, coursesemester)
+    #                 )
+
+    #     connection.commit()
+    #     connection.close()
+    #     return render_template("addnew.html", newsession=0)
+
+@app.route("/editnew", methods=['POST'])
+def editnew():
     if request.method == 'POST':
+        name = request.form.get('addnewname')
+        email = request.form.get('addnewemail')
+        gender = request.form.get('addnewgender')
+        department = request.form.get('addnewdepartment')
+        course = request.form.get('addnewcourse')
+        courseyear = request.form.get('addnewcourseyear')
+        coursesemester = request.form.get('addnewcoursesemester')
+        status = request.form.get('phdstatus')
+        office = request.form.get('addnewofficelocation')
+        
+        if not gender or not department or not office or not courseyear or not coursesemester:
+            error = "Please fill all the fields"
+            print(error)
+            return render_template("addnew.html", newsession=0, error = error)
 
-        data = request.form
-        # print(data)
-        name = data.get('addnewname')
-        email = data.get('addnewemail')
-        gender = data.get('addnewgender')
-        department = data.get('addnewdepartment')
-        course = data.get('addnewcourse')
-        courseyear = data.get('addnewcourseyear')
-        coursesemester = data.get('addnewcoursesemester')
-        status = data.get('phdstatus')
-        office = data.get('addnewofficelocation')
-
-        # print(data)
+        print("Name:", name)
+        print("Email:", email)
+        print("Gender:", gender)
+        print("Department:", department)
+        print("Course:", course)
+        print("Course Year:", courseyear)
+        print("Course Semester:", coursesemester)
+        print("Status:", status)
+        print("Office:", office)
 
         connection = sqlite3.connect('pending.db')
-
         cur = connection.cursor()
 
         cur.execute("INSERT INTO pending (name, email, gender, department, doctorate, office, course, year_of_study, semester) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -425,6 +464,25 @@ def addnew():
         connection.commit()
         connection.close()
         return render_template("addnew.html", newsession=0)
+
+
+def convert_semester(semester):
+    if semester == 1:
+        return "Sem I"
+    elif semester == 2:
+        return "Sem II"
+    elif semester == 3:
+        return "Sem III"
+    elif semester == 4:
+        return "Sem IV"
+    elif semester == 5:
+        return "Sem V"
+    elif semester == 6:
+        return "Sem VI"
+    elif semester == 7:
+        return "Sem VII"
+    elif semester == 8:
+        return "Sem VIII"
 
 @app.route("/pending", methods=['GET', 'POST'])
 def pending():
@@ -463,6 +521,18 @@ def pending():
             course = new_data[0][7]
             yos = new_data[0][8]
             semester = new_data[0][9]
+            if yos == 1:
+                yos = "First Year"
+            elif yos == 2:
+                yos = "Second Year"
+            elif yos == 3:
+                yos = "Third Year"
+            elif yos == 4:
+                yos = "Fourth Year"
+            semester = convert_semester(int(semester))
+            print(yos)
+            print(semester)
+
             return render_template("editdata.html", Dname=name, Demail=email, Dgender=gender, Ddepartment=department, Dphdstatus=phdstatus, Doffice=office, Dcourse=course, Dyos=yos, Dsemester=semester)
 
         if action == 'SAVE':
