@@ -213,25 +213,16 @@ def gameover():
 
 
 
-    
+    # game ends
+
+
 
 
 
         
      
 
-# Route for handling the login page logic
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            #error = 'Invalid Credentials. Please try again.'
-            return redirect("/*")
-        else:
-            return redirect("/admin")
-    return render_template("login.html", error=error)
-    
+
 
 @app.route("/register")
 def register():
@@ -405,7 +396,7 @@ def search():
 def addnew():
     if request.method == 'GET':
         flash = None
-        return render_template("addnew.html")
+        return render_template("addnew.html", newsession=1)
 
     if request.method == 'POST':
 
@@ -433,7 +424,7 @@ def addnew():
 
         connection.commit()
         connection.close()
-        return render_template("addnew.html")
+        return render_template("addnew.html", newsession=0)
 
 @app.route("/pending", methods=['GET', 'POST'])
 def pending():
@@ -445,7 +436,7 @@ def pending():
 
         new_data = cur.fetchall(); 
         con.close()
-        return render_template("pending.html",data = list(reversed(new_data)))
+        return render_template("pending.html",data = list(reversed(new_data)), newsession=1)
 
 
     if request.method == 'POST':  
@@ -474,29 +465,6 @@ def pending():
             semester = new_data[0][9]
             return render_template("editdata.html", Dname=name, Demail=email, Dgender=gender, Ddepartment=department, Dphdstatus=phdstatus, Doffice=office, Dcourse=course, Dyos=yos, Dsemester=semester)
 
-# @app.route("/editdata", methods=['GET', 'POST'])
-# def editdata():
-        # id = request.form.get('edit')
-        # con = sqlite3.connect("pending.db")
-        # cur = con.cursor()
-        # cur.execute("SELECT * FROM pending WHERE id = ?", (id,))
-        # new_data = cur.fetchall(); 
-        # cur.execute("DELETE FROM pending WHERE id = ?", (id,))
-        # con.commit()
-        # con.close() 
-
-        # print(new_data)
-        # name = new_data[0][1]
-        # email = new_data[0][2]
-        # gender = new_data[0][3]
-        # department = new_data[0][4]
-        # phdstatus =new_data[0][5]
-        # office = new_data[0][6]
-        # course = new_data[0][7]
-        # yos = new_data[0][8]
-        # semester = new_data[0][9]
-
-        # return render_template("editdata.html", Dname=name, Demail=email, Dgender=gender, Ddepartment=department, Dphdstatus=phdstatus, Doffice=office, Dcourse=course, Dyos=yos, Dsemester=semester)
         if action == 'SAVE':
         
             ## fetching data from pending
@@ -506,81 +474,36 @@ def pending():
             fetched_data = cur.fetchall(); 
             print(fetched_data)
             new_data = fetched_data[0]
-            
-            print(new_data)
 
-            cur.execute("DELETE FROM pending WHERE id = ?", (id,))
-            con.commit()
-            con.close()
 
             ## inserting data into main database
             con = sqlite3.connect("facinator.db")
             cur = con.cursor()
-
+            # print(new_data)
             cur.execute("INSERT INTO admindb(faculty_name, faculty_email, department_name, subject_name, year_of_study, semester, gender, doctorate, office) VALUES(?,?,?,?,?,?,?,?,?)",
                         (new_data[1], new_data[2], new_data[4], new_data[7], new_data[8], new_data[9], new_data[3], new_data[5], new_data[6])
                         )
-            
             con.commit()
             con.close()
-            # print(new_data)
-            return redirect("/pending")
+
+            # deleting from pending database
+            con = sqlite3.connect("pending.db")
+            cur = con.cursor()
+            cur.execute("DELETE FROM pending WHERE id = ?", (id,))
+            con.commit()
+            con.close()
+            new_data = fetched_data
+            return render_template("pending.html",data = list(reversed(new_data)), newsession=0)
         
         if action == 'DELETE':
             con = sqlite3.connect("pending.db")
             cur = con.cursor()
             cur.execute("DELETE FROM pending WHERE id = ?", (id,))
             con.commit()
+            cur.execute("SELECT * FROM pending")
+            new_data = cur.fetchall(); 
             con.close()
-
-            return redirect("/pending")
-
-
-
-# @app.route("/savedata", methods=['GET', 'POST'])
-# def savedata():
-#     if request.method == 'POST':    
-#         id = request.form.get('save')
-        
-#         ## fetching data from pending
-#         con = sqlite3.connect("pending.db")
-#         cur = con.cursor()
-#         cur.execute("SELECT * FROM pending WHERE id = ?", (id,))
-#         fetched_data = cur.fetchall(); 
-#         print(fetched_data)
-#         new_data = fetched_data[0]
-        
-#         print(new_data)
-
-#         cur.execute("DELETE FROM pending WHERE id = ?", (id,))
-#         con.commit()
-#         con.close()
-
-#         ## inserting data into main database
-#         con = sqlite3.connect("facinator.db")
-#         cur = con.cursor()
-
-#         cur.execute("INSERT INTO admindb(faculty_name, faculty_email, department_name, subject_name, year_of_study, semester, gender, doctorate, office) VALUES(?,?,?,?,?,?,?,?,?)",
-#                     (new_data[1], new_data[2], new_data[4], new_data[7], new_data[8], new_data[9], new_data[3], new_data[5], new_data[6])
-#                     )
-        
-#         con.commit()
-#         con.close()
-#         # print(new_data)
-#         return redirect("/pending")
-
-# @app.route("/deletedata", methods=['GET', 'POST'])
-# def deletedata():
-   
-#     id = request.form.get('delete')
-
-#     con = sqlite3.connect("pending.db")
-#     cur = con.cursor()
-#     cur.execute("DELETE FROM pending WHERE id = ?", (id,))
-#     con.commit()
-#     con.close()
-
-#     return redirect("/pending")
+            return render_template("pending.html",data = list(reversed(new_data)), newsession=0)
 
 
 
@@ -594,6 +517,43 @@ def pending():
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Route for handling the login page logic
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            #error = 'Invalid Credentials. Please try again.'
+            return redirect("/*")
+        else:
+            return redirect("/admin")
+    return render_template("login.html", error=error)
+    
 
 
 ### admin function start

@@ -13,8 +13,8 @@
         let timerInterval;
         function datasaving(){
             Swal.fire({
-            title: "Saving Data",
-            html: "<b></b>",
+            // title: "Saving Data",
+            html: "saving data ... <b></b>",
             timer: 2000,
             timerProgressBar: true,
             didOpen: () => {
@@ -36,9 +36,9 @@
 
         }
        
-        function showAlert() {
-            alert("form submitted")
-        }
+        // function showAlert() {
+        //     alert("form submitted")
+        // }
 
     </script>
 
@@ -68,7 +68,7 @@
 <body>
 
 
-    <form action="/addnew" method="POST" class="addnewform">
+    <form action="{{ url_for('addnew') }}" method="POST" class="addnewform">
 
     <!-- name -->
     <label for="addnewname">Faculty Name</label>
@@ -169,7 +169,7 @@
     
     <!-- submit / post -->
     <br><br>
-    <input type="submit" name="addnew" id="addnew" class="btn btn-primary addnewelement" value="Submit" onclick="showAlert()">
+    <input type="submit" name="addnew" id="addnew" class="btn btn-primary addnewelement" value="Submit" onclick="datasving()">
 
     </form> 
        

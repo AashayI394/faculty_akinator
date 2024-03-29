@@ -10,13 +10,39 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
 
+            function formload(){
+                let timerInterval;
+                Swal.fire({
+                // title: "Loading form",
+                html: "Loading form ... (<b></b>)",
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                    const timer = Swal.getPopup().querySelector("b");
+                    timerInterval = setInterval(() => {
+                    timer.textContent = `${Swal.getTimerLeft()}`;
+                    }, 100);
+                },
+                willClose: () => {
+                    clearInterval(timerInterval);
+                }
+                }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log("I was closed by the timer");
+                }
+                });
+
+            }
+
     
 
        
 
         // // or via CommonJS
         // const Swal = require('sweetalert2')
-        function showAlert() {
+        function recordsaved() {
             Swal.fire({
             title: "Success",
             text: "Record Saved !",
@@ -51,7 +77,16 @@
 
     </style>
 </head>
-<body>
+<body 
+        {% if newsession == 1 %}
+            onload="formload()"
+        {% endif %}
+
+        {% if newsession == 0 %}
+            onload="recordsaved()"
+        {% endif %}
+
+>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
         <a class="navbar-brand" href="/"><img src="../static/logo/logo3.png" alt="Facinator" class="facinator_logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
