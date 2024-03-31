@@ -186,25 +186,29 @@ def game_complete():
     global result
     global question_thread
 
+    fac_name = result[0][1]
+
     # print(result)
     if len(result) > 1:
         return redirect("/facinator_game_mode")
 
     if(result):
-        q = "Your Faculty is\n"+ str(result[0][1])
+        q = "Your Faculty is\n"+ str(fac_name)
     else:
-        return redirect("/gameover")
-    return render_template("game_final.html", q=q,questions=question_thread)
+        return redirect("url_for('gameover)")
+    return render_template("game_final.html", q=q,questions=question_thread, name=fac_name)
 
 
 @app.route("/gameover", methods=['GET', 'POST'])
 def gameover():
     global question_thread
     if request.method == 'POST':
+        name = request.form['fac_name']
+        print(name)
         val = request.form['game_answer']
         q = final_stmt(val)
         if val == "yes":
-            return render_template("game_over_success.html", q=q, val=val, questions=question_thread)
+            return render_template("game_over_success.html", q=q, val=val, questions=question_thread, name=name)
         # if val == "no":
         #     return render_template("game_over_failure.html", q=q, val=val)
     val = "no"
@@ -243,6 +247,7 @@ def clear():
 
 @app.route("/mail", methods=['GET', 'POST'])
 def mail():
+
     if request.method == 'POST':
         email = request.form['id']
     
@@ -361,7 +366,6 @@ def subj():
 @app.route("/mailto", methods=['GET', 'POST'])
 def mailto():
     if request.method == 'POST':
-
         email = request.form['email']
         subject = request.form['mailsubject']
         body = request.form['mailbody']
@@ -574,7 +578,6 @@ def pending():
             new_data = cur.fetchall(); 
             con.close()
             return render_template("pending.html",data = list(reversed(new_data)), newsession=0)
-
 
 
 
