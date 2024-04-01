@@ -1,64 +1,18 @@
 from flask import Flask, flash, render_template, request, redirect, url_for, jsonify
 
 import random,sqlite3
-from guesslogic import generate_random_number, update_params, find_intersection, create_query, delete_query, singlequery, query_all, dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp,col_header,dept, yos, gender, doc, office,subject
+# from guesslogic import generate_random_number, update_params, find_intersection, create_query, delete_query, singlequery, query_all, dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp,col_header,dept, yos, gender, doc, office,subject
+from gameobject import GameSession, facinator_game, find_intersection, singlequery,query_all
 
-
-# game logic start
-question_thread = []
-conn = sqlite3.connect('facinator.db')
-cursor = conn.cursor()
-result = query_all()
-gametuple=[]
-col_res = []
-
- 
-
-
-def facinator_game(col, res, val):
-    global result
-    global gametuple
-    if len(result) > 1:
-        gametuple.append((col, res, val))
-        print(gametuple)
-        tempres = singlequery(col, res)
-        if val == 'no':
-            tempres = list(set(result) - set(tempres))
-        result = find_intersection(result, tempres)
-
-# def game_reload():
-#     global result, col_header,question_thread,col_res,gametuple
-#     col_header = ["department_name","subject_name","gender","doctorate","office","year_of_study","semester"]
-#     result = query_all()
-#     update_params(result)
-#     question_thread = []
-#     col_res= []
-#     gametuple = []
-    
-
-
-def update_params():
-    global result
-    global dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp
-    dept_temp = [t[3] for t in result]
-    yos_temp = [t[7] for t in result]
-    gender_temp = [t[9] for t in result]
-    semester_temp = [t[8] for t in result]
-    office_temp = [t[11] for t in result]
-    doc_temp = [t[10] for t in result]
-    subject_temp = [t[6] for t in result]
-
-# game logic end    
 
 app = Flask(__name__)
 app.secret_key = 'Facinator'
 
 from app import app
-import sqlite3
 con = sqlite3.connect("facinator.db")
 c = con.cursor()
 
- #Execute a query to fetch faculties along with their department and subject details
+#Execute a query to fetch faculties along with their department and subject details
 c.execute('''SELECT * FROM admindb''')
 table = c.fetchall()
 c.execute('''SELECT DISTINCT department_name FROM admindb''')
@@ -67,32 +21,8 @@ c.execute('''SELECT DISTINCT subject_name FROM admindb''')
 subject = c.fetchall()
 c.execute('''SELECT DISTINCT year_of_study FROM admindb''')
 year = c.fetchall()
-
 con.close()
-
-
-def create_question(col, res):
-  
-    match col:
-        case "department_name":
-            q = "Does the Faculty belong to " + res + " department ?"
-        case "subject_name":
-            q = "Does this Faculty teach the course " + res +" ?"
-        case "gender":
-            q = "Is the Faculty "+ res +" ?"
-        case "doctorate":
-            if res == 'yes':
-                q = "Does this Faculty member have a PhD ?"
-            if res == 'no':
-                q = "The Faculty does not hold a PhD ?"
-
-        case "office":
-            q = "Is this faculty's office located in the " + res +" ?"
-        case "year_of_study":
-            q = "Does this Faculty conduct any class year "+ str(res) + " ?"
-        case "semester":
-            q = "Does the Faculty teach any course of semester " + str(res) + " ?"
-    return q
+g = None 
 
 def final_stmt(val):
     if val == "yes":
@@ -101,121 +31,114 @@ def final_stmt(val):
         q = "I lost."
     return q
 
-
-@app.route("/")
-def index():
-    return render_template("layout.html")
-
 @app.route("/facinator_game")
 def game_start():
-    # game_reload()
-    return redirect("/facinator_game_mode")
+    global g
+    g = GameSession()
+    return redirect(url_for('game_execute'))
 
 
 
 @app.route("/facinator_game_mode", methods=['GET', 'POST'])
 def game_execute():
-    global question_thread
-    global col_res
-    global result
-    global col_header
-    global gender_temp
-    global doc_temp
-    # print(result)
+    global g
+    # print(g.result)
 
-    if len(result) == 1:
-        return redirect("/final_question")
+    if len(g.result) == 1:
+        return redirect(url_for('game_complete'))
         # q = "Your Faculty is\n"+ str(result[0][1])
         # return render_template("game.html", q=q)
 
     if request.method == 'GET':
-        update_params(result)
-        
-        temp = create_query(0)
+        g.update_params()        
+        temp = g.create_query()
         if temp == [-1,-1]:
-            return redirect("/final_question")
+            return redirect(url_for('game_complete'))
         col = temp[0]
         res = temp[1]
-        col_res.append((col,res))
+        g.col_res.append((col,res))
 
-        q = create_question(col, res)
+        q = g.create_question(col,res)
 
-        question_thread.append([q,None])
-        return render_template("game.html", q=q, questions = question_thread)
+        g.question_thread.append([q,None])
+        return render_template("game.html", q=q, questions=g.question_thread)
     if request.method == 'POST':
         val = request.form['game_answer']
-        question_thread[-1][1] = val
+        g.question_thread[-1][1] = val
 
-        update_params(result)
+        g.update_params()
         # function call here
 
-        col = col_res[-1][0]
-        res = col_res[-1][1]
+        col = g.col_res[-1][0]
+        res = g.col_res[-1][1]
 
         # print("\n\n"+ val)
         # # question_thread[-1][1] = val
-        print(col_header)
+        print(g.col_header)
+        g.delete_res(col,res)
         if val == 'no':
             if col =='gender':
-                col_header.remove(col)
-                gender_temp2 = list(set(gender_temp) - set(res))
-                gender_temp = gender_temp2
+                if col in g.col_header:
+                    g.col_header.remove(col)
+                    gender_temp2 = list(set(g.gender_temp) - set(res))
+                    g.gender_temp = gender_temp2
             if col=='doctorate':
-                col_header.remove(col)
-                doc_temp2 = list(set(doc_temp) - set(res))
-                doc_temp = doc_temp2
-            delete_query(col,res)
+                if col in g.col_header:
+                    g.col_header.remove(col)
+                    doc_temp2 = list(set(g.doc_temp) - set(res))
+                    g.doc_temp = doc_temp2
         if val == 'yes':
             if col == 'gender':
-                gender_temp = list(res)
+                g.gender_temp = list(res)
             if col == 'doctorate':
-                doc_temp = list(res)
+                g.doc_temp = list(res)
             if col == 'semester':
-                if 'year_of_study' in col_header:
-                    col_header.remove('year_of_study')
-            col_header.remove(col)
+                if 'year_of_study' in g.col_header:
+                    g.col_header.remove('year_of_study')
+            if col in g.col_header:
+                g.col_header.remove(col)
         
-        col = col_res[-1][0]
-        res = col_res[-1][1]
+        col = g.col_res[-1][0]
+        res = g.col_res[-1][1]
 
         # print(col_res,"\n\n")
 
-        facinator_game(col,res,val)
-    return redirect("/facinator_game_mode")
+        facinator_game(col,res,val,g)
+    return redirect(url_for('game_execute'))
 
 @app.route("/final_question", methods=['GET', 'POST'])
 def game_complete():
-    global result
-    global question_thread
-
-    fac_name = result[0][1]
+    global g
+    fac_name = g.result[0][1]
 
     # print(result)
-    if len(result) > 1:
-        return redirect("/facinator_game_mode")
+    if len(g.result) > 1:
+        return redirect(url_for('game_execute'))
 
-    if(result):
-        q = "Your Faculty is\n"+ str(fac_name)
+    if(g.result):
+        q = "Your Faculty is :"+ str(fac_name)
     else:
-        return redirect("url_for('gameover)")
-    return render_template("game_final.html", q=q,questions=question_thread, name=fac_name)
+        return redirect("/gameover")
+    return render_template("game_final.html", q=q,questions=g.question_thread, name=fac_name)
 
 
 @app.route("/gameover", methods=['GET', 'POST'])
 def gameover():
-    global question_thread
+    global g
     if request.method == 'POST':
         name = request.form['fac_name']
         print(name)
         val = request.form['game_answer']
         q = final_stmt(val)
         if val == "yes":
-            return render_template("game_over_success.html", q=q, val=val, questions=question_thread, name=name)
-        # if val == "no":
-        #     return render_template("game_over_failure.html", q=q, val=val)
-    val = "no"
-    q = final_stmt(val)
-    return render_template("game_over_failure.html", q=q, val=val, questions=question_thread)
+            return render_template("game_over_success.html", q=q, val=val, questions=g.question_thread, name=name)
+        else:
+            return render_template("game_over_failure.html", q=q, val=val, questions=g.question_thread)
+
+    if request.method == 'GET':
+        val = "no"
+        q = final_stmt(val)
+        return render_template("game_over_failure.html", q=q, val=val, questions=g.question_thread)
 
 
 
@@ -228,7 +151,9 @@ def gameover():
         
      
 
-
+@app.route("/")
+def index():
+    return render_template("layout.html")
 
 @app.route("/register")
 def register():
