@@ -1,0 +1,39 @@
+{% extends 'gamelayout.html' %}
+
+
+{% block js %}
+    <script>
+        function displayRandomGenie(){
+            var images = [
+                "../static/akinator_images/akifinal.webp"
+            ];
+
+            //get a random index from images array
+            var randomIndex = Math.floor(Math.random() * images.length);
+
+            //get images by id and set its source
+            document.getElementById("game-genie-pic").style.backgroundImage = "url('" + images[randomIndex] + "')";
+        }
+
+        window.onload = displayRandomGenie;
+    </script>
+{% endblock js %}
+
+
+
+{% block q_stmt %}
+{{q}}
+{% endblock q_stmt %}
+
+
+
+{% block gameoptions %}
+<a href="/facinator_game" class="game-option-element"><button class="btn btn-primary game-option-element">Play Again !</button></a>
+<!-- <a href="/addnew" class="game-option-element"><button class="btn btn-primary game-option-element">Help-US-Improve</button></a> -->
+<form action="{{ url_for('mail2') }}" class="game-option-element" method="POST"><input type="text" name="res" id="res" hidden value="{{ name }}">
+<a class="game-option-element"><button class="btn btn-primary game-option-element">Mail</button></a>
+</form>
+{% endblock gameoptions %}
+
+
+

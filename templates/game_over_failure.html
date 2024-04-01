@@ -4,7 +4,7 @@
     <script>
         function displayRandomGenie(){
             var images = [
-                "../static/akinator_images/akifinal.webp"
+                "../static/akinator_images/akilost.webp"
             ];
 
             //get a random index from images array
@@ -27,8 +27,12 @@
 
 
 {% block gameoptions %}
-<a href="/facinator_game_mode" class="game-option-element"><button class="btn btn-primary game-option-element">Play Again !</button></a>
-<a href="/addnew" class="game-option-element"><button class="btn btn-primary game-option-element">Help-US-Improve</button></a>
+<a href="/facinator_game" class="game-option-element">
+    <button class="btn btn-primary game-option-element">Play Again !</button>
+</a>
+<a href="/addnew" class="game-option-element">
+    <button class="btn btn-primary game-option-element">Help-US-Improve</button>
+</a>
 {% endblock gameoptions %}
 
 

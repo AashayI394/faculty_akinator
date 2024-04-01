@@ -13,9 +13,19 @@ from math import ceil
 # 		print()
 # 	return result
 
+# dept_temp = []
+# subject_temp = []
+# yos_temp = []
+# semester_temp = []
+# gender_temp = []
+# office_temp = []
+# doc_temp = [] 
+# col_header = []
 
 
-
+# def game_reload():
+        
+# global dept_temp, subject_temp, yos_temp, semester_temp, gender_temp, office_temp,doc_temp
 col_header = ["department_name","subject_name","gender","doctorate","office","year_of_study","semester"]
 
 conn = sqlite3.connect('facinator.db')
@@ -33,7 +43,6 @@ yos = []
 for sub in subs:
     yos.append(sub[0])
     yos_temp = yos
-
 
 semester = [1,2,3,4,5,6,7,8]
 semester_temp = [1,2,3,4,5,6,7,8]

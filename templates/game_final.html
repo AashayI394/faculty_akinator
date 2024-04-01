@@ -26,7 +26,7 @@
 
 
 {% block q_stmt %}
-    
+
 {{q}}
 
 
@@ -37,12 +37,16 @@
 
 {% block gameoptions %}
 
-<form action="{{ url_for('game_execute') }}" method="post" class="game-option-element">
-    <input type="text" name="game_answer" value="yes" hidden><input type="submit" class="btn btn-primary game-option-element" value="YES">
+<form action="{{ url_for('gameover') }}" method="POST" class="game-option-element">
+    <input type="text" name="fac_name" id="fac_name" value="{{ name }}" hidden>
+    <input type="text" name="game_answer" value="yes" hidden>
+    <input type="submit" class="btn btn-primary game-option-element" value="YES">
 </form>
 
-<form action="{{ url_for('game_execute') }}" method="post" class="game-option-element">
-    <input type="text" name="game_answer" value="no" hidden><input type="submit" class="btn btn-primary game-option-element" value="NO">
+<form action="{{ url_for('gameover') }}" method="POST" class="game-option-element">
+    <input type="text" name="fac_name" id="fac_name" value="{{ name }}" hidden>
+    <input type="text" name="game_answer" value="no" hidden>
+    <input type="submit" class="btn btn-primary game-option-element" value="NO">
 </form>
 
 {% endblock gameoptions %}

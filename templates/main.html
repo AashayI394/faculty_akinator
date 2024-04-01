@@ -7,12 +7,12 @@
 
                 <div class="card">
                     <div class="card-info">
-                        <div class="card-avatar"></div>
+                        <div class="card-avatar">{{ i[3] }}</div>
                         <div class="card-title">{{ i[1] }}</div>
                         <div class="card-subtitle">{{ i[6] }}</div>
 
                         <form action="{{ url_for('mail') }}" class="card-social__item card-social" method="post">
-                            <input type="submit" name="id" id="id" class="btn btn-primary mail" value="{{ i[2] }}">
+                            <input type="submit" name="id" id="id" class="btn btn-light mail" value="{{ i[2] }}">
                         </form>
 
                     </div> 
