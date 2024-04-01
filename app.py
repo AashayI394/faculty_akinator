@@ -12,6 +12,8 @@ result = query_all()
 gametuple=[]
 col_res = []
 
+ 
+
 
 def facinator_game(col, res, val):
     global result
@@ -35,16 +37,16 @@ def facinator_game(col, res, val):
     
 
 
-# def update_params():
-#     global result
-#     global dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp
-#     dept_temp = [t[3] for t in result]
-#     yos_temp = [t[7] for t in result]
-#     gender_temp = [t[9] for t in result]
-#     semester_temp = [t[8] for t in result]
-#     office_temp = [t[11] for t in result]
-#     doc_temp = [t[10] for t in result]
-#     subject_temp = [t[6] for t in result]
+def update_params():
+    global result
+    global dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp
+    dept_temp = [t[3] for t in result]
+    yos_temp = [t[7] for t in result]
+    gender_temp = [t[9] for t in result]
+    semester_temp = [t[8] for t in result]
+    office_temp = [t[11] for t in result]
+    doc_temp = [t[10] for t in result]
+    subject_temp = [t[6] for t in result]
 
 # game logic end    
 
@@ -578,17 +580,6 @@ def pending():
             new_data = cur.fetchall(); 
             con.close()
             return render_template("pending.html",data = list(reversed(new_data)), newsession=0)
-
-
-
-
-
-
-
-
-
-
-
 
 
 
