@@ -46,7 +46,7 @@
         .game-left{
             flex: 6;
             height: 100%;
-            background-color:seashell;
+            background-color:rgba(255, 245, 238, 0.603);
             display: flex;
             flex-direction: row;
             border-radius: 10px;
@@ -58,7 +58,8 @@
             height: 100%;
             /* background-color:aliceblue; */
             overflow-y: scroll;
-
+            background-color:rgba(255, 245, 238, 0.603);
+            border-radius: 10px;
             display: flex;
             flex-direction: column;
             
@@ -102,7 +103,8 @@
         }
 
         .thread_element_container{
-            background-color: aliceblue;
+            /* background-color: aliceblue; */
+            background-color:rgba(255, 245, 238, 0.733);
             border-radius: 5px;
             margin: 5px;
             padding: 10px;
@@ -192,6 +194,13 @@
             font-weight: 900;
         }
 
+        body{
+            background-image: url('../static/images/aki_back.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            
+        }
+
 
 
 
@@ -208,6 +217,7 @@
           <div class="navbar-nav">
             <a class="nav-item nav-link active" href="/facinator_game">Game-Mode</a>
             <a class="nav-item nav-link" href="/pending">Pending-Requests</a>
+            <a class="nav-item nav-link" href="/main">Facinator</a>
             <a class="nav-item nav-link" href="https://en.akinator.com/#">Akinator</a>
             <a class="nav-item nav-link" href="/addnew">Help-US-Improve</a>
             <a class="nav-item nav-link" href="/login">Admin</a>

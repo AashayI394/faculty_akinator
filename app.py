@@ -140,10 +140,13 @@ def gameover():
         q = final_stmt(val)
         return render_template("game_over_failure.html", q=q, val=val, questions=g.question_thread)
 
-
-
     # game ends
 
+
+
+
+
+        
 
 
 
