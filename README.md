@@ -81,23 +81,24 @@ This is a **"Guess Who?"** game curated for the students of COEP Tech, consistin
 ## Features Preview
 
 
-  Home
+  **Home**
 ![Home](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/79b39a25-e662-4254-8d83-1e184905fe4e)
 
 
 
 
-  Connect With Faculty
+  **Connect With Faculty**
 ![Connect With Faculty](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/807972ac-894b-4b5c-9423-8c972032d8a9)
 
 
 
 
-  Help Us Improve
+  **Help Us Improve**
 ![Help Us Improve](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/6a3e1552-5a26-4d75-8b95-04c03e643873)
 
 
 
 
+  **Admin Login**
 ![Admin Login](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/e279d730-1600-4aca-aa52-0f77f3659c36)
 
