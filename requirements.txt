@@ -52,7 +52,6 @@ maxminddb==2.4.0
 mdurl==0.1.2
 multidict==6.0.4
 mysqlclient==2.2.4
-nftables==0.1
 notify2==0.3.1
 olefile==0.46
 opi==5.0.0
