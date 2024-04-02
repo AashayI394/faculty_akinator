@@ -71,7 +71,7 @@ If you already know the faculty name and wish to get their contact details using
 
 
 
-![facinator2](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/ee9e77b4-4a08-48a4-a67b-0df80777ee4d)
+![](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/ee9e77b4-4a08-48a4-a67b-0df80777ee4d)
 
 
 This is a **"Guess Who?"** game curated for the students of COEP Tech, consisting of faculties of our University.
@@ -81,17 +81,19 @@ This is a **"Guess Who?"** game curated for the students of COEP Tech, consistin
 ## Features Preview
 
 
-
+  Home
 ![Home](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/79b39a25-e662-4254-8d83-1e184905fe4e)
 
 
 
 
+  Connect With Faculty
 ![Connect With Faculty](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/807972ac-894b-4b5c-9423-8c972032d8a9)
 
 
 
 
+  Help Us Improve
 ![Help Us Improve](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/6a3e1552-5a26-4d75-8b95-04c03e643873)
 
 
