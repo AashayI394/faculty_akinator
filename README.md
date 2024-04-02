@@ -49,7 +49,7 @@ In case you are unable to find the desired faculty, or if a faculty that you kno
 
 
 
-![](https://github.com/roguexsubmarine/faculty_akinator/static/README_img/facinator7.png)
+![](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/4ae62215-1f01-4fcc-aefd-da0dff4ee5c0)
 
 
 
@@ -71,7 +71,7 @@ If you already know the faculty name and wish to get their contact details using
 
 
 
-![](https://github.com/roguexsubmarine/faculty_akinator/static/README_img/facinator2.png)
+![facinator2](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/ee9e77b4-4a08-48a4-a67b-0df80777ee4d)
 
 
 This is a **"Guess Who?"** game curated for the students of COEP Tech, consisting of faculties of our University.
@@ -82,20 +82,20 @@ This is a **"Guess Who?"** game curated for the students of COEP Tech, consistin
 
 
 
-![Home](https://github.com/roguexsubmarine/faculty_akinator/static/README_img/facinator1.png)
+![Home](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/79b39a25-e662-4254-8d83-1e184905fe4e)
 
 
 
 
-![Connect With Faculty](https://github.com/roguexsubmarine/faculty_akinator/static/README_img/facinator8.png)
+![Connect With Faculty](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/807972ac-894b-4b5c-9423-8c972032d8a9)
 
 
 
 
-![Help Us Improve](https://github.com/roguexsubmarine/faculty_akinator/static/README_img/facinator3.png)
+![Help Us Improve](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/6a3e1552-5a26-4d75-8b95-04c03e643873)
 
 
 
 
-![Admin Login](https://github.com/roguexsubmarine/faculty_akinator/static/README_img/facinator5.png)
+![Admin Login](https://github.com/roguexsubmarine/faculty_akinator/assets/152835157/e279d730-1600-4aca-aa52-0f77f3659c36)
 
