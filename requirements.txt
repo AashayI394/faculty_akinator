@@ -12,7 +12,6 @@ Babel==2.14.0
 bcrypt==4.0.1
 blinker==1.7.0
 Brotli==1.1.0
-cepces==0.3.8
 certifi==2023.11.17
 cffi==1.16.0
 charset-normalizer==3.3.2
