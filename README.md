@@ -43,6 +43,39 @@ In case you are unable to find the desired faculty, or if a faculty that you kno
 
 **Backend:** Flask, Python3, SQLite3
 
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/roguexsubmarine/faculty_akinator.git
+```
+
+Go to the project directory
+
+```bash
+  cd faculty_akinator/
+```
+
+Install dependencies
+
+```bash
+  rm -rf .venv
+  python3 -m venv .venv
+  source .venv/bin/activate
+  pip install -r requirements.txt
+```
+
+Start the server
+
+```bash
+  flask run
+```
+
+
+
+
 ## How It Works
 
 **Faculty Recommendation Mode:**
