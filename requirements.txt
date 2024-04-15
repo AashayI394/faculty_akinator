@@ -4,3 +4,4 @@ markdown-it-py==3.0.0
 requests==2.31.0
 requests-gssapi==1.2.3
 Gunicorn
+flask_session

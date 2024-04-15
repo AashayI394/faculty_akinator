@@ -1,4 +1,5 @@
-from flask import Flask, flash, render_template, request, redirect, url_for, jsonify
+from flask import Flask, flash, render_template, request, redirect, url_for, jsonify, session
+from flask_session import Session
 
 import random,sqlite3
 # from guesslogic import generate_random_number, update_params, find_intersection, create_query, delete_query, singlequery, query_all, dept_temp, yos_temp, gender_temp, semester_temp, doc_temp, office_temp,subject_temp,col_header,dept, yos, gender, doc, office,subject
@@ -6,9 +7,26 @@ from gameobject import GameSession, facinator_game, find_intersection, singleque
 
 
 app = Flask(__name__)
-app.secret_key = 'Facinator'
 
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+app.secret_key = 'Facinator'
+Session(app)
 from app import app
+
+
+
+
+
+
+
+
+
+
+
 con = sqlite3.connect("facinator.db")
 c = con.cursor()
 
@@ -23,6 +41,17 @@ c.execute('''SELECT DISTINCT year_of_study FROM admindb''')
 year = c.fetchall()
 con.close()
 g = None 
+
+
+
+
+
+
+
+
+
+
+
 
 def final_stmt(val):
     if val == "yes":
@@ -46,8 +75,6 @@ def game_execute():
 
     if len(g.result) == 1:
         return redirect(url_for('game_complete'))
-        # q = "Your Faculty is\n"+ str(result[0][1])
-        # return render_template("game.html", q=q)
 
     if request.method == 'GET':
         g.update_params()        
