@@ -326,13 +326,7 @@ def mailto():
         email = request.form['email']
         subject = request.form['mailsubject']
         body = request.form['mailbody']
-
-        # print(email, subject, body)
-
-        # return redirect("/login")
         return redirect(f"mailto:{email}?subject={subject}&body={body}")
-
-    
     else:
         return redirect("/main")
     
@@ -359,33 +353,6 @@ def addnew():
         flash = None
         return render_template("addnew.html", newsession=1)
 
-    # if request.method == 'POST':
-
-    #     data = request.form
-    #     # print(data)
-    #     name = data.get('addnewname')
-    #     email = data.get('addnewemail')
-    #     gender = data.get('addnewgender')
-    #     department = data.get('addnewdepartment')
-    #     course = data.get('addnewcourse')
-    #     courseyear = data.get('addnewcourseyear')
-    #     coursesemester = data.get('addnewcoursesemester')
-    #     status = data.get('phdstatus')
-    #     office = data.get('addnewofficelocation')
-
-    #     print(department)
-
-    #     connection = sqlite3.connect('pending.db')
-
-    #     cur = connection.cursor()
-
-    #     cur.execute("INSERT INTO pending (name, email, gender, department, doctorate, office, course, year_of_study, semester) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    #                 (name, email, gender, department, status, office, course, courseyear, coursesemester)
-    #                 )
-
-    #     connection.commit()
-    #     connection.close()
-    #     return render_template("addnew.html", newsession=0)
 
 @app.route("/editnew", methods=['POST'])
 def editnew():
