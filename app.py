@@ -524,7 +524,7 @@ def pending():
             con.commit()
             con.close()
             new_data = fetched_data
-            return render_template("pending.html",data = list(reversed(new_data)), newsession=0)
+            return redirect('/pending')
         
         if action == 'DELETE':
             con = sqlite3.connect("pending.db")
